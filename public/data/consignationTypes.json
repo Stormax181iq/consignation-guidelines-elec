@@ -2,15 +2,15 @@
   "consignationTypes": [
     {
       "id": 0,
-      "name": "bt"
+      "type": "bt"
     },
     {
       "id": 1,
-      "name": "hta"
+      "type": "hta"
     },
     {
       "id": 2,
-      "name": "htb"
+      "type": "htb"
     }
   ]
 }
