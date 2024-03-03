@@ -1,0 +1,16 @@
+{
+  "consignationTypes": [
+    {
+      "id": 0,
+      "name": "bt"
+    },
+    {
+      "id": 1,
+      "name": "hta"
+    },
+    {
+      "id": 2,
+      "name": "htb"
+    }
+  ]
+}
