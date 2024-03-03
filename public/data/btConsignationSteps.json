@@ -1,0 +1,71 @@
+{
+  "steps": [
+    {
+      "id": 0,
+      "type": "bt",
+      "title": "Lecture des plans",
+      "todos": [
+        {
+          "id": 0,
+          "description": "Rajouter l'ING sur l'intitulé si l'on a affaire à un chantier ingénierie",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Rajouter le MAINT s'il y a RSI, séparation ou autres accès sans besoin de remises d'ouvrages",
+          "done": false
+        }
+      ],
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Numéro d'affaire",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Remplissage de la finalité des travaux ou de l'onglet travaux",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Pièce jointe dans l'accès",
+          "done": false
+        },
+        {
+          "id": 3,
+          "description": "FCMO correct",
+          "done": false
+        }
+      ],
+      "nextSteps": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "type": "Raccordement câbles",
+      "title": "Mise à jour des informations",
+      "todos": [
+        {
+          "id": 0,
+          "description": "Vérifier si l'AMEO est édité dans l'IEP",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Cocher LEIA AMEO amont et AMEO aval si exempté de PMEO",
+          "done": false
+        }
+      ]
+    }
+  ]
+}
