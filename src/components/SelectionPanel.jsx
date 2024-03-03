@@ -1,29 +1,19 @@
 import PropTypes from "prop-types";
 
-export default function SelectionPanel({ consignationTypes }) {
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
-
-  function handleClick() {
-    // TODO Complete
-  }
-
+export default function SelectionPanel({ consignationTypes, onSubmit }) {
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
       <select name="consignation-type">
         <option value="">--Choisir un type de consignation--</option>
         {consignationTypes.map((consignationType) => {
           return (
-            <option value={consignationType.name} key={consignationType.name}>
-              Consignation {consignationType.name.toUpperCase()}
+            <option value={consignationType.type} key={consignationType.type}>
+              Consignation {consignationType.type.toUpperCase()}
             </option>
           );
         })}
       </select>
-      <button onClick={handleClick} type="submit">
-        Confirmer
-      </button>
+      <button type="submit">Confirmer</button>
     </form>
   );
 }
@@ -31,7 +21,8 @@ export default function SelectionPanel({ consignationTypes }) {
 SelectionPanel.propTypes = {
   consignationTypes: PropTypes.arrayOf(
     PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
     })
   ).isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
