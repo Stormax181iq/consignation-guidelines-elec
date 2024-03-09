@@ -38,7 +38,7 @@ function ConsignationCard({ step }) {
   const requiredElements = step.requiredElements;
 
   return (
-    <div>
+    <div className="border-solid border border-black">
       <h1>{step.type.toUpperCase() + " - " + step.title}</h1>
       {todos && (
         <>
