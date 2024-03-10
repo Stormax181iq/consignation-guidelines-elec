@@ -5,7 +5,17 @@ import PropTypes from "prop-types";
 export default function ConsignationGuide({ consignation }) {
   const [consignationSteps, setConsignationSteps] = useState(null);
 
+  const consignationTitles = consignationSteps
+    ? consignationSteps.map((step) => {
+        return {
+          id: step.id,
+          title: step.title,
+        };
+      })
+    : null;
+
   useEffect(() => {
+    // Consignation type change entails modification of current state data
     let ignore = false;
     (async () => {
       const data = await fetch(
@@ -25,7 +35,15 @@ export default function ConsignationGuide({ consignation }) {
             if (step.id !== 0) {
               return null;
             } else {
-              return <ConsignationCard key={step.id} step={step} />;
+              return step.title ? (
+                <ConsignationCard
+                  key={step.id}
+                  step={step}
+                  consignationTitles={consignationTitles}
+                />
+              ) : (
+                <p>Pas encore disponible</p>
+              );
             }
           })
         : null}
@@ -33,12 +51,13 @@ export default function ConsignationGuide({ consignation }) {
   );
 }
 
-function ConsignationCard({ step }) {
+function ConsignationCard({ step, consignationTitles }) {
   const todos = step.todos;
   const requiredElements = step.requiredElements;
+  const nextSteps = step.nextSteps;
 
   return (
-    <div className="border-solid border border-black">
+    <div className="border">
       <h1>{step.type.toUpperCase() + " - " + step.title}</h1>
       {todos && (
         <>
@@ -51,7 +70,6 @@ function ConsignationCard({ step }) {
               </div>
             );
           })}
-
           <h2>Requis :</h2>
           {requiredElements.map((requiredElem) => {
             return (
@@ -62,6 +80,17 @@ function ConsignationCard({ step }) {
                 </label>
               </div>
             );
+          })}
+          <h2>Étapes suivantes :</h2>
+          {nextSteps.map((id) => {
+            const nextTitle = consignationTitles.map((titleObject) => {
+              if (titleObject.id === id) {
+                return titleObject.title;
+              } else {
+                return null;
+              }
+            });
+            return <p key={id}>{nextTitle}</p>;
           })}
         </>
       )}
@@ -75,4 +104,5 @@ ConsignationGuide.propTypes = {
 
 ConsignationCard.propTypes = {
   step: PropTypes.object.isRequired,
+  consignationTitles: PropTypes.arrayOf(PropTypes.object.isRequired),
 };
