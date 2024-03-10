@@ -38,22 +38,12 @@
           "done": false
         }
       ],
-      "nextSteps": [
-        {
-          "id": 1
-        },
-        {
-          "id": 2
-        },
-        {
-          "id": 3
-        }
-      ]
+      "nextSteps": [1, 2, 3]
     },
     {
       "id": 1,
-      "type": "Raccordement câbles",
-      "title": "Mise à jour des informations",
+      "type": "bt",
+      "title": "Raccordement câbles",
       "todos": [
         {
           "id": 0,
