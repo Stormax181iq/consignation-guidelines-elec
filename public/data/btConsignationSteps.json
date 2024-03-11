@@ -20,7 +20,7 @@
         {
           "id": 0,
           "description": "Numéro d'affaire",
-          "done": false
+          "done": true
         },
         {
           "id": 1,
@@ -53,6 +53,50 @@
         {
           "id": 1,
           "description": "Cocher LEIA AMEO amont et AMEO aval si exempté de PMEO",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "bt",
+      "title": "Dé-raccordement câbles"
+    },
+    {
+      "id": 3,
+      "type": "bt",
+      "title": "Dépose abandon câbles",
+      "todos": [
+        {
+          "id": 0,
+          "description": "Créer un nouveau courrier IEP des tronçons à démanteler ou abandonner",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Cocher LEIA AMHEO",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Rien si le câble reste en exploitation pour utilisation ultérieure",
+          "done": false
+        }
+      ],
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Manœuvre des GE",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Désignation amont IBT",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Travaux aval IPT",
           "done": false
         }
       ]
