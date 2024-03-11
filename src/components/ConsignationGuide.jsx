@@ -38,11 +38,11 @@ export default function ConsignationGuide({ consignation }) {
               return step.title ? (
                 <ConsignationCard
                   key={step.id}
-                  step={step}
+                  initialStep={step}
                   consignationTitles={consignationTitles}
                 />
               ) : (
-                <p>Pas encore disponible</p>
+                <p key="error-not-available">Pas encore disponible</p>
               );
             }
           })
@@ -51,10 +51,33 @@ export default function ConsignationGuide({ consignation }) {
   );
 }
 
-function ConsignationCard({ step, consignationTitles }) {
+function ConsignationCard({ initialStep, consignationTitles }) {
+  const [step, setStep] = useState(initialStep);
   const todos = step.todos;
   const requiredElements = step.requiredElements;
   const nextSteps = step.nextSteps;
+
+  function handleCheckboxClick(requiredElem) {
+    // TODO doesn't change on click, see console error message
+    setStep((prevStep) => {
+      const updatedRequiredElements = prevStep.requiredElements.map(
+        (element) => {
+          if (element.id === requiredElem.id) {
+            return {
+              ...element,
+              done: !element.done,
+            };
+          }
+          return element;
+        }
+      );
+
+      return {
+        ...prevStep,
+        requiredElements: updatedRequiredElements,
+      };
+    });
+  }
 
   return (
     <div className="border">
@@ -74,7 +97,12 @@ function ConsignationCard({ step, consignationTitles }) {
           {requiredElements.map((requiredElem) => {
             return (
               <div className="ml-2" key={requiredElem.id}>
-                <input type="checkbox" id={requiredElem.description} />
+                <input
+                  type="checkbox"
+                  id={requiredElem.description}
+                  checked={requiredElem.done}
+                  onClick={(requiredElem) => handleCheckboxClick}
+                />
                 <label htmlFor={requiredElem.description}>
                   {requiredElem.description}
                 </label>
@@ -90,7 +118,12 @@ function ConsignationCard({ step, consignationTitles }) {
                 return null;
               }
             });
-            return <p key={id}>{nextTitle}</p>;
+            return (
+              <div className="ml-2" key={nextTitle}>
+                <input type="checkbox" id={nextTitle} />
+                <label htmlFor={nextTitle}>{nextTitle}</label>
+              </div>
+            );
           })}
         </>
       )}
@@ -103,6 +136,6 @@ ConsignationGuide.propTypes = {
 };
 
 ConsignationCard.propTypes = {
-  step: PropTypes.object.isRequired,
+  initialStep: PropTypes.object.isRequired,
   consignationTitles: PropTypes.arrayOf(PropTypes.object.isRequired),
 };
