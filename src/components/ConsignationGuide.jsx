@@ -57,26 +57,41 @@ function ConsignationCard({ initialStep, consignationTitles }) {
   const requiredElements = step.requiredElements;
   const nextSteps = step.nextSteps;
 
-  function handleCheckboxClick(requiredElem) {
-    // TODO doesn't change on click, see console error message
-    setStep((prevStep) => {
-      const updatedRequiredElements = prevStep.requiredElements.map(
-        (element) => {
-          if (element.id === requiredElem.id) {
-            return {
-              ...element,
-              done: !element.done,
-            };
-          }
-          return element;
-        }
-      );
-
-      return {
-        ...prevStep,
-        requiredElements: updatedRequiredElements,
-      };
-    });
+  function handleCheckbox(instruction, category) {
+    switch (category) {
+      case "t":
+        setStep({
+          ...step,
+          todos: todos.map((todo) => {
+            if (todo.id === instruction.id) {
+              return {
+                ...todo,
+                done: !todo.done,
+              };
+            } else {
+              return todo;
+            }
+          }),
+        });
+        break;
+      case "rE":
+        setStep({
+          ...step,
+          requiredElements: requiredElements.map((reqElem) => {
+            if (reqElem.id === instruction.id) {
+              return {
+                ...reqElem,
+                done: !reqElem.done,
+              };
+            } else {
+              return reqElem;
+            }
+          }),
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -88,7 +103,12 @@ function ConsignationCard({ initialStep, consignationTitles }) {
           {todos.map((todo) => {
             return (
               <div className="ml-2" key={todo.id}>
-                <input type="checkbox" id={todo.description} />
+                <input
+                  type="checkbox"
+                  id={todo.description}
+                  checked={todo.done}
+                  onChange={() => handleCheckbox(todo, "t")}
+                />
                 <label htmlFor={todo.description}>{todo.description}</label>
               </div>
             );
@@ -101,7 +121,7 @@ function ConsignationCard({ initialStep, consignationTitles }) {
                   type="checkbox"
                   id={requiredElem.description}
                   checked={requiredElem.done}
-                  onClick={(requiredElem) => handleCheckboxClick}
+                  onChange={() => handleCheckbox(requiredElem, "rE")}
                 />
                 <label htmlFor={requiredElem.description}>
                   {requiredElem.description}
