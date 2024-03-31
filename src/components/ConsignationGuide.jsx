@@ -140,7 +140,11 @@ function ConsignationCard({ initialStep, consignationTitles }) {
             });
             return (
               <div className="ml-2" key={nextTitle}>
-                <input type="checkbox" id={nextTitle} />
+                <input
+                  type="checkbox"
+                  id={nextTitle}
+                  disabled={requiredElements.filter((rE) => !rE.done).length}
+                />
                 <label htmlFor={nextTitle}>{nextTitle}</label>
               </div>
             );
