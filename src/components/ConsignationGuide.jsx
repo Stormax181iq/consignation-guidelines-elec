@@ -32,9 +32,7 @@ export default function ConsignationGuide({ consignation }) {
     <>
       {consignationSteps
         ? consignationSteps.map((step) => {
-            if (step.id !== 0) {
-              return null;
-            } else {
+            if (step.shown) {
               return step.title ? (
                 <ConsignationCard
                   key={step.id}
@@ -44,6 +42,8 @@ export default function ConsignationGuide({ consignation }) {
               ) : (
                 <p key="error-not-available">Pas encore disponible</p>
               );
+            } else {
+              return null;
             }
           })
         : null}

@@ -4,6 +4,7 @@
       "id": 0,
       "type": "bt",
       "title": "Lecture des plans",
+      "shown": true,
       "todos": [
         {
           "id": 0,
@@ -20,7 +21,7 @@
         {
           "id": 0,
           "description": "Numéro d'affaire",
-          "done": true
+          "done": false
         },
         {
           "id": 1,
@@ -44,6 +45,7 @@
       "id": 1,
       "type": "bt",
       "title": "Raccordement câbles",
+      "shown": false,
       "todos": [
         {
           "id": 0,
@@ -60,12 +62,14 @@
     {
       "id": 2,
       "type": "bt",
-      "title": "Dé-raccordement câbles"
+      "title": "Dé-raccordement câbles",
+      "shown": false
     },
     {
       "id": 3,
       "type": "bt",
       "title": "Dépose abandon câbles",
+      "shown": false,
       "todos": [
         {
           "id": 0,
