@@ -28,6 +28,22 @@ export default function ConsignationGuide({ consignation }) {
     };
   }, [consignation]);
 
+  function handleToggleDisplay(id) {
+    setConsignationSteps(
+      consignationSteps.map((consignationStep) => {
+        console.log(consignationStep);
+        if (consignationStep.id === id) {
+          return {
+            ...consignationStep,
+            shown: !consignationStep.shown,
+          };
+        } else {
+          return consignationStep;
+        }
+      })
+    );
+  }
+
   return (
     <>
       {consignationSteps
@@ -38,6 +54,7 @@ export default function ConsignationGuide({ consignation }) {
                   key={step.id}
                   initialStep={step}
                   consignationTitles={consignationTitles}
+                  onToggleDisplay={handleToggleDisplay}
                 />
               ) : (
                 <p key="error-not-available">Pas encore disponible</p>
@@ -51,7 +68,11 @@ export default function ConsignationGuide({ consignation }) {
   );
 }
 
-function ConsignationCard({ initialStep, consignationTitles }) {
+function ConsignationCard({
+  initialStep,
+  consignationTitles,
+  onToggleDisplay,
+}) {
   const [step, setStep] = useState(initialStep);
   const todos = step.todos;
   const requiredElements = step.requiredElements;
@@ -113,6 +134,10 @@ function ConsignationCard({ initialStep, consignationTitles }) {
               </div>
             );
           })}
+        </>
+      )}
+      {requiredElements && (
+        <>
           <h2>Requis :</h2>
           {requiredElements.map((requiredElem) => {
             return (
@@ -129,6 +154,10 @@ function ConsignationCard({ initialStep, consignationTitles }) {
               </div>
             );
           })}
+        </>
+      )}
+      {nextSteps && (
+        <>
           <h2>Étapes suivantes :</h2>
           {nextSteps.map((id) => {
             const nextTitle = consignationTitles.map((titleObject) => {
@@ -143,7 +172,12 @@ function ConsignationCard({ initialStep, consignationTitles }) {
                 <input
                   type="checkbox"
                   id={nextTitle}
-                  disabled={requiredElements.filter((rE) => !rE.done).length}
+                  disabled={
+                    requiredElements
+                      ? requiredElements.filter((rE) => !rE.done).length
+                      : false
+                  }
+                  onChange={() => onToggleDisplay(id)}
                 />
                 <label htmlFor={nextTitle}>{nextTitle}</label>
               </div>
@@ -162,4 +196,5 @@ ConsignationGuide.propTypes = {
 ConsignationCard.propTypes = {
   initialStep: PropTypes.object.isRequired,
   consignationTitles: PropTypes.arrayOf(PropTypes.object.isRequired),
+  onToggleDisplay: PropTypes.func,
 };
