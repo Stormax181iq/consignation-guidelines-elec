@@ -5,15 +5,6 @@ import PropTypes from "prop-types";
 export default function ConsignationGuide({ consignation }) {
   const [consignationSteps, setConsignationSteps] = useState(null);
 
-  const consignationTitles = consignationSteps
-    ? consignationSteps.map((step) => {
-        return {
-          id: step.id,
-          title: step.title,
-        };
-      })
-    : null;
-
   useEffect(() => {
     // Consignation type change entails modification of current state data
     let ignore = false;
@@ -31,7 +22,6 @@ export default function ConsignationGuide({ consignation }) {
   function handleToggleDisplay(id) {
     setConsignationSteps(
       consignationSteps.map((consignationStep) => {
-        console.log(consignationStep);
         if (consignationStep.id === id) {
           return {
             ...consignationStep,
@@ -53,7 +43,7 @@ export default function ConsignationGuide({ consignation }) {
                 <ConsignationCard
                   key={step.id}
                   initialStep={step}
-                  consignationTitles={consignationTitles}
+                  consignationSteps={consignationSteps}
                   onToggleDisplay={handleToggleDisplay}
                 />
               ) : (
@@ -68,11 +58,7 @@ export default function ConsignationGuide({ consignation }) {
   );
 }
 
-function ConsignationCard({
-  initialStep,
-  consignationTitles,
-  onToggleDisplay,
-}) {
+function ConsignationCard({ initialStep, consignationSteps, onToggleDisplay }) {
   const [step, setStep] = useState(initialStep);
   const todos = step.todos;
   const requiredElements = step.requiredElements;
@@ -160,9 +146,9 @@ function ConsignationCard({
         <>
           <h2>Étapes suivantes :</h2>
           {nextSteps.map((id) => {
-            const nextTitle = consignationTitles.map((titleObject) => {
-              if (titleObject.id === id) {
-                return titleObject.title;
+            const nextTitle = consignationSteps.map((consignationStep) => {
+              if (consignationStep.id === id) {
+                return consignationStep.title;
               } else {
                 return null;
               }
@@ -177,6 +163,15 @@ function ConsignationCard({
                       ? requiredElements.filter((rE) => !rE.done).length
                       : false
                   }
+                  checked={consignationSteps
+                    .map((consignationStep) => {
+                      if (consignationStep.id === id) {
+                        return consignationStep.shown;
+                      } else {
+                        return null;
+                      }
+                    })
+                    .includes(true)}
                   onChange={() => onToggleDisplay(id)}
                 />
                 <label htmlFor={nextTitle}>{nextTitle}</label>
@@ -195,6 +190,6 @@ ConsignationGuide.propTypes = {
 
 ConsignationCard.propTypes = {
   initialStep: PropTypes.object.isRequired,
-  consignationTitles: PropTypes.arrayOf(PropTypes.object.isRequired),
+  consignationSteps: PropTypes.arrayOf(PropTypes.object.isRequired),
   onToggleDisplay: PropTypes.func,
 };
