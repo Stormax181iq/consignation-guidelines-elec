@@ -57,7 +57,8 @@
           "description": "Cocher LEIA AMEO amont et AMEO aval si exempté de PMEO",
           "done": false
         }
-      ]
+      ],
+      "nextSteps": [4]
     },
     {
       "id": 2,
@@ -101,6 +102,29 @@
         {
           "id": 2,
           "description": "Travaux aval IPT",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "bt",
+      "title": "Message ecome si conditionnelle",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Vérifier si l'AMEO est édité dans l'IEP",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Cocher contrôle schéma si PMEO conditionnelle",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Vérifier MC avant désignation retour ecome",
           "done": false
         }
       ]
