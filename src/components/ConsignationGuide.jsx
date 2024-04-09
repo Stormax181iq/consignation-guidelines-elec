@@ -34,18 +34,77 @@ export default function ConsignationGuide({ consignation }) {
     );
   }
 
+  function handleCheckbox(stepId, checkboxId, category) {
+    switch (category) {
+      case "t":
+        setConsignationSteps(
+          consignationSteps.map((consignationStep) => {
+            if (consignationStep.id === stepId) {
+              return {
+                ...consignationStep,
+                todos: consignationStep.todos.map((todo) => {
+                  if (todo.id === checkboxId) {
+                    return {
+                      ...todo,
+                      done: !todo.done,
+                    };
+                  } else {
+                    return todo;
+                  }
+                }),
+              };
+            } else {
+              return consignationStep;
+            }
+          })
+        );
+        break;
+      case "rE":
+        setConsignationSteps(
+          consignationSteps.map((consignationStep) => {
+            if (consignationStep.id === stepId) {
+              return {
+                ...consignationStep,
+                requiredElements: consignationStep.requiredElements.map(
+                  (requiredElement) => {
+                    if (requiredElement.id === checkboxId) {
+                      return {
+                        ...requiredElement,
+                        done: !requiredElement.done,
+                      };
+                    } else {
+                      return requiredElement;
+                    }
+                  }
+                ),
+              };
+            } else {
+              return consignationStep;
+            }
+          })
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <>
       {consignationSteps
         ? consignationSteps.map((step) => {
             if (step.shown) {
               return step.title ? (
-                <ConsignationCard
-                  key={step.id}
-                  initialStep={step}
-                  consignationSteps={consignationSteps}
-                  onToggleDisplay={handleToggleDisplay}
-                />
+                <>
+                  <ConsignationCard
+                    key={step.id}
+                    stepId={step.id}
+                    consignationSteps={consignationSteps}
+                    onToggleDisplay={handleToggleDisplay}
+                    onCheckbox={handleCheckbox}
+                  />
+                  <IncompleteTasksDisplay />
+                </>
               ) : (
                 <p key="error-not-available">Pas encore disponible</p>
               );
@@ -58,52 +117,23 @@ export default function ConsignationGuide({ consignation }) {
   );
 }
 
-function ConsignationCard({ initialStep, consignationSteps, onToggleDisplay }) {
-  const [step, setStep] = useState(initialStep);
-  const todos = step.todos;
-  const requiredElements = step.requiredElements;
-  const nextSteps = step.nextSteps;
+function ConsignationCard({
+  stepId,
+  consignationSteps,
+  onToggleDisplay,
+  onCheckbox,
+}) {
+  const currentStep = consignationSteps.filter((step) => step.id === stepId)[0];
+  const todos = currentStep.todos;
+  const requiredElements = currentStep.requiredElements;
+  const nextSteps = currentStep.nextSteps;
+  const title = currentStep.title;
+  const type = currentStep.type;
 
-  function handleCheckbox(instruction, category) {
-    switch (category) {
-      case "t":
-        setStep({
-          ...step,
-          todos: todos.map((todo) => {
-            if (todo.id === instruction.id) {
-              return {
-                ...todo,
-                done: !todo.done,
-              };
-            } else {
-              return todo;
-            }
-          }),
-        });
-        break;
-      case "rE":
-        setStep({
-          ...step,
-          requiredElements: requiredElements.map((reqElem) => {
-            if (reqElem.id === instruction.id) {
-              return {
-                ...reqElem,
-                done: !reqElem.done,
-              };
-            } else {
-              return reqElem;
-            }
-          }),
-        });
-        break;
-      default:
-        break;
-    }
-  }
-
+  console.log(currentStep);
   return (
     <div className="border">
-      <h1>{step.type.toUpperCase() + " - " + step.title}</h1>
+      <h1>{type.toUpperCase() + " - " + title}</h1>
       {todos && (
         <>
           <h2>À faire :</h2>
@@ -114,7 +144,7 @@ function ConsignationCard({ initialStep, consignationSteps, onToggleDisplay }) {
                   type="checkbox"
                   id={todo.description}
                   checked={todo.done}
-                  onChange={() => handleCheckbox(todo, "t")}
+                  onChange={() => onCheckbox(currentStep.id, todo.id, "t")}
                 />
                 <label htmlFor={todo.description}>{todo.description}</label>
               </div>
@@ -132,7 +162,9 @@ function ConsignationCard({ initialStep, consignationSteps, onToggleDisplay }) {
                   type="checkbox"
                   id={requiredElem.description}
                   checked={requiredElem.done}
-                  onChange={() => handleCheckbox(requiredElem, "rE")}
+                  onChange={() =>
+                    onCheckbox(currentStep.id, requiredElem.id, "rE")
+                  }
                 />
                 <label htmlFor={requiredElem.description}>
                   {requiredElem.description}
@@ -184,12 +216,22 @@ function ConsignationCard({ initialStep, consignationSteps, onToggleDisplay }) {
   );
 }
 
+function IncompleteTasksDisplay() {
+  return (
+    <div className="border">
+      <h2>À faire :</h2>
+      <p>Pas encore disponible</p>
+    </div>
+  );
+}
+
 ConsignationGuide.propTypes = {
   consignation: PropTypes.string.isRequired,
 };
 
 ConsignationCard.propTypes = {
-  initialStep: PropTypes.object.isRequired,
   consignationSteps: PropTypes.arrayOf(PropTypes.object.isRequired),
   onToggleDisplay: PropTypes.func,
+  stepId: PropTypes.number,
+  onCheckbox: PropTypes.func,
 };
