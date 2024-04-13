@@ -95,16 +95,13 @@ export default function ConsignationGuide({ consignation }) {
         ? consignationSteps.map((step) => {
             if (step.shown) {
               return step.title ? (
-                <>
-                  <ConsignationCard
-                    key={step.id}
-                    stepId={step.id}
-                    consignationSteps={consignationSteps}
-                    onToggleDisplay={handleToggleDisplay}
-                    onCheckbox={handleCheckbox}
-                  />
-                  <IncompleteTasksDisplay />
-                </>
+                <ConsignationCard
+                  key={step.id}
+                  stepId={step.id}
+                  consignationSteps={consignationSteps}
+                  onToggleDisplay={handleToggleDisplay}
+                  onCheckbox={handleCheckbox}
+                />
               ) : (
                 <p key="error-not-available">Pas encore disponible</p>
               );
@@ -113,6 +110,10 @@ export default function ConsignationGuide({ consignation }) {
             }
           })
         : null}
+      <IncompleteTasksDisplay
+        steps={consignationSteps}
+        onCheckbox={handleCheckbox}
+      />
     </>
   );
 }
@@ -130,7 +131,6 @@ function ConsignationCard({
   const title = currentStep.title;
   const type = currentStep.type;
 
-  console.log(currentStep);
   return (
     <div className="border">
       <h1>{type.toUpperCase() + " - " + title}</h1>
@@ -216,12 +216,33 @@ function ConsignationCard({
   );
 }
 
-function IncompleteTasksDisplay() {
+function IncompleteTasksDisplay({ steps, onCheckbox }) {
+  const shownSteps = steps.filter((step) => step.shown);
+  const stepsWithTodos = shownSteps.filter((step) => step.todos);
+
   return (
-    <div className="border">
+    <aside className="border">
       <h2>À faire :</h2>
-      <p>Pas encore disponible</p>
-    </div>
+      {stepsWithTodos.map((step) => {
+        return step.todos.map((todo) => {
+          if (!todo.done) {
+            return (
+              <div className="ml-2" key={todo.id}>
+                <input
+                  type="checkbox"
+                  id={todo.description}
+                  checked={todo.done}
+                  onChange={() => onCheckbox(step.id, todo.id, "t")}
+                />
+                <label htmlFor={todo.description}>{todo.description}</label>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        });
+      })}
+    </aside>
   );
 }
 
@@ -233,5 +254,10 @@ ConsignationCard.propTypes = {
   consignationSteps: PropTypes.arrayOf(PropTypes.object.isRequired),
   onToggleDisplay: PropTypes.func,
   stepId: PropTypes.number,
+  onCheckbox: PropTypes.func,
+};
+
+IncompleteTasksDisplay.propTypes = {
+  steps: PropTypes.arrayOf(PropTypes.object.isRequired),
   onCheckbox: PropTypes.func,
 };
