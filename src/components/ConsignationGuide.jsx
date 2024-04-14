@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 export default function ConsignationGuide({ consignation }) {
   const [consignationSteps, setConsignationSteps] = useState(null);
-
   useEffect(() => {
     // Consignation type change entails modification of current state data
     let ignore = false;
@@ -89,6 +88,10 @@ export default function ConsignationGuide({ consignation }) {
     }
   }
 
+  function validConsignation() {
+    // TODO add confirmation screen and automatic refusal if there are non-completed tasks
+    setConsignationSteps(null);
+  }
   return (
     <>
       {consignationSteps
@@ -110,10 +113,17 @@ export default function ConsignationGuide({ consignation }) {
             }
           })
         : null}
-      <IncompleteTasksDisplay
-        steps={consignationSteps}
-        onCheckbox={handleCheckbox}
-      />
+      {consignationSteps && (
+        <IncompleteTasksDisplay
+          steps={consignationSteps}
+          onCheckbox={handleCheckbox}
+        />
+      )}
+      {consignationSteps && (
+        <button className="bg-emerald-500 p-2 m-1" onClick={validConsignation}>
+          Valider
+        </button>
+      )}
     </>
   );
 }
@@ -219,6 +229,9 @@ function ConsignationCard({
 function IncompleteTasksDisplay({ steps, onCheckbox }) {
   const shownSteps = steps.filter((step) => step.shown);
   const stepsWithTodos = shownSteps.filter((step) => step.todos);
+  const stepsWithRequiredElements = shownSteps.filter(
+    (step) => step.requiredElements
+  );
 
   return (
     <aside className="border">
@@ -235,6 +248,28 @@ function IncompleteTasksDisplay({ steps, onCheckbox }) {
                   onChange={() => onCheckbox(step.id, todo.id, "t")}
                 />
                 <label htmlFor={todo.description}>{todo.description}</label>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        });
+      })}
+      <h2>Requis :</h2>
+      {stepsWithRequiredElements.map((step) => {
+        return step.requiredElements.map((requiredElement) => {
+          if (!requiredElement.done) {
+            return (
+              <div className="ml-2" key={requiredElement.id}>
+                <input
+                  type="checkbox"
+                  id={requiredElement.description}
+                  checked={requiredElement.done}
+                  onChange={() => onCheckbox(step.id, requiredElement.id, "t")}
+                />
+                <label htmlFor={requiredElement.description}>
+                  {requiredElement.description}
+                </label>
               </div>
             );
           } else {
