@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 
 import PropTypes from "prop-types";
+import AlertDialog from "./AlertDialog.jsx";
 
-export default function ConsignationGuide({ consignation }) {
+export default function ConsignationGuide({
+  consignation,
+  onResetConsignation,
+}) {
   const [consignationSteps, setConsignationSteps] = useState(null);
   useEffect(() => {
     // Consignation type change entails modification of current state data
@@ -89,8 +93,7 @@ export default function ConsignationGuide({ consignation }) {
   }
 
   function validConsignation() {
-    // TODO add confirmation screen and automatic refusal if there are non-completed tasks
-    setConsignationSteps(null);
+    onResetConsignation();
   }
   return (
     <>
@@ -120,9 +123,7 @@ export default function ConsignationGuide({ consignation }) {
         />
       )}
       {consignationSteps && (
-        <button className="bg-emerald-500 p-2 m-1" onClick={validConsignation}>
-          Valider
-        </button>
+        <AlertDialog validConsignation={validConsignation} />
       )}
     </>
   );
