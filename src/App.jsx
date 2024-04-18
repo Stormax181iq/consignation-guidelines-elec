@@ -12,6 +12,10 @@ export default function App() {
     setCurrentConsignation(e.target.children[0].value);
   }
 
+  function handleResetConsignation() {
+    setCurrentConsignation("");
+  }
+
   useEffect(() => {
     let ignore = false;
     (async () => {
@@ -41,7 +45,10 @@ export default function App() {
       </header>
       <main className="ml-2">
         {currentConsignation !== "" && (
-          <ConsignationGuide consignation={currentConsignation} />
+          <ConsignationGuide
+            consignation={currentConsignation}
+            onResetConsignation={handleResetConsignation}
+          />
         )}
       </main>
     </>
