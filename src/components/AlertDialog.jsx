@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AlertDialog({ validConsignation }) {
+export default function AlertDialog({ validConsignation, isDisabled }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -19,7 +19,11 @@ export default function AlertDialog({ validConsignation }) {
 
   return (
     <>
-      <button className="bg-emerald-500 p-2" onClick={handleClickOpen}>
+      <button
+        className="bg-emerald-500 p-2 disabled:bg-slate-300"
+        disabled={isDisabled}
+        onClick={handleClickOpen}
+      >
         Valider
       </button>
       <Dialog
