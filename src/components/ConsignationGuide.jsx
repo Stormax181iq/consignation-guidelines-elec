@@ -8,6 +8,15 @@ export default function ConsignationGuide({
   onResetConsignation,
 }) {
   const [consignationSteps, setConsignationSteps] = useState(null);
+
+  const shownSteps = consignationSteps
+    ? consignationSteps.filter((step) => step.shown)
+    : null;
+  const stepsWithTodos =
+    consignationSteps && shownSteps.filter((step) => step.todos);
+  const stepsWithRequiredElements =
+    consignationSteps && shownSteps.filter((step) => step.requiredElements);
+
   useEffect(() => {
     // Consignation type change entails modification of current state data
     let ignore = false;
@@ -118,12 +127,34 @@ export default function ConsignationGuide({
         : null}
       {consignationSteps && (
         <IncompleteTasksDisplay
-          steps={consignationSteps}
+          stepsWithTodos={stepsWithTodos}
+          stepsWithRequiredElements={stepsWithRequiredElements}
           onCheckbox={handleCheckbox}
         />
       )}
       {consignationSteps && (
-        <AlertDialog validConsignation={validConsignation} />
+        <AlertDialog
+          validConsignation={validConsignation}
+          isDisabled={
+            // If everything is ticked, the button is enabled, and reciprocally
+            !(
+              stepsWithTodos
+                .map((step) => {
+                  return step.todos.filter((todo) => !todo.done).length === 0;
+                })
+                .includes(true) &&
+              stepsWithRequiredElements
+                .map((step) => {
+                  return (
+                    step.requiredElements.filter(
+                      (requiredElement) => !requiredElement.done
+                    ).length === 0
+                  );
+                })
+                .includes(true)
+            )
+          }
+        />
       )}
     </>
   );
@@ -145,6 +176,7 @@ function ConsignationCard({
   return (
     <div className="border">
       <h1>{type.toUpperCase() + " - " + title}</h1>
+      {/* TODO <button> xmark </button> */}
       {todos && (
         <>
           <h2>À faire :</h2>
@@ -227,57 +259,63 @@ function ConsignationCard({
   );
 }
 
-function IncompleteTasksDisplay({ steps, onCheckbox }) {
-  const shownSteps = steps.filter((step) => step.shown);
-  const stepsWithTodos = shownSteps.filter((step) => step.todos);
-  const stepsWithRequiredElements = shownSteps.filter(
-    (step) => step.requiredElements
-  );
+function IncompleteTasksDisplay({
+  stepsWithTodos,
+  stepsWithRequiredElements,
+  onCheckbox,
+}) {
+  const jsxTodos = stepsWithTodos
+    .map((step) => {
+      return step.todos.map((todo) => {
+        if (!todo.done) {
+          return (
+            <div className="ml-2" key={todo.id}>
+              <input
+                type="checkbox"
+                id={todo.description}
+                checked={todo.done}
+                onChange={() => onCheckbox(step.id, todo.id, "t")}
+              />
+              <label htmlFor={todo.description}>{todo.description}</label>
+            </div>
+          );
+        } else {
+          return null;
+        }
+      });
+    })
+    .filter((step) => step !== null);
+
+  const jsxRequiredElements = stepsWithRequiredElements
+    .map((step) => {
+      return step.requiredElements.map((requiredElement) => {
+        if (!requiredElement.done) {
+          return (
+            <div className="ml-2" key={requiredElement.id}>
+              <input
+                type="checkbox"
+                id={requiredElement.description}
+                checked={requiredElement.done}
+                onChange={() => onCheckbox(step.id, requiredElement.id, "rE")}
+              />
+              <label htmlFor={requiredElement.description}>
+                {requiredElement.description}
+              </label>
+            </div>
+          );
+        } else {
+          return null;
+        }
+      });
+    })
+    .filter((step) => step !== null);
 
   return (
     <aside className="border">
       <h2>À faire :</h2>
-      {stepsWithTodos.map((step) => {
-        return step.todos.map((todo) => {
-          if (!todo.done) {
-            return (
-              <div className="ml-2" key={todo.id}>
-                <input
-                  type="checkbox"
-                  id={todo.description}
-                  checked={todo.done}
-                  onChange={() => onCheckbox(step.id, todo.id, "t")}
-                />
-                <label htmlFor={todo.description}>{todo.description}</label>
-              </div>
-            );
-          } else {
-            return null;
-          }
-        });
-      })}
+      {jsxTodos}
       <h2>Requis :</h2>
-      {stepsWithRequiredElements.map((step) => {
-        return step.requiredElements.map((requiredElement) => {
-          if (!requiredElement.done) {
-            return (
-              <div className="ml-2" key={requiredElement.id}>
-                <input
-                  type="checkbox"
-                  id={requiredElement.description}
-                  checked={requiredElement.done}
-                  onChange={() => onCheckbox(step.id, requiredElement.id, "t")}
-                />
-                <label htmlFor={requiredElement.description}>
-                  {requiredElement.description}
-                </label>
-              </div>
-            );
-          } else {
-            return null;
-          }
-        });
-      })}
+      {jsxRequiredElements}
     </aside>
   );
 }
