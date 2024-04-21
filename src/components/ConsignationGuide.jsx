@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import AlertDialog from "./AlertDialog.jsx";
 
+import ConsignationCard from "./ConsignationCard.jsx";
+import IncompleteTasksDisplay from "./IncompleteTasksDisplay.jsx";
+
 export default function ConsignationGuide({
   consignation,
   onResetConsignation,
@@ -10,13 +13,14 @@ export default function ConsignationGuide({
   const [consignationSteps, setConsignationSteps] = useState(null);
 
   const shownSteps = consignationSteps
-    ? consignationSteps.filter((step) => step.shown)
+    ? consignationSteps.filter((step) => step.shown === true)
     : null;
-  const stepsWithTodos =
-    consignationSteps && shownSteps.filter((step) => step.todos);
-  const stepsWithRequiredElements =
-    consignationSteps && shownSteps.filter((step) => step.requiredElements);
-
+  const stepsWithTodos = shownSteps
+    ? shownSteps.filter((step) => step.todos)
+    : null;
+  const stepsWithRequiredElements = shownSteps
+    ? shownSteps.filter((step) => step.requiredElements)
+    : null;
   useEffect(() => {
     // Consignation type change entails modification of current state data
     let ignore = false;
@@ -101,9 +105,6 @@ export default function ConsignationGuide({
     }
   }
 
-  function validConsignation() {
-    onResetConsignation();
-  }
   return (
     <>
       {consignationSteps
@@ -134,204 +135,35 @@ export default function ConsignationGuide({
       )}
       {consignationSteps && (
         <AlertDialog
-          validConsignation={validConsignation}
+          onAction={onResetConsignation}
           isDisabled={
             // If everything is ticked, the button is enabled, and reciprocally
-            !(
-              stepsWithTodos
-                .map((step) => {
-                  return step.todos.filter((todo) => !todo.done).length === 0;
-                })
-                .includes(true) &&
-              stepsWithRequiredElements
-                .map((step) => {
-                  return (
-                    step.requiredElements.filter(
-                      (requiredElement) => !requiredElement.done
-                    ).length === 0
-                  );
-                })
-                .includes(true)
-            )
+            stepsWithTodos
+              .map((step) => {
+                return step.todos.filter((todo) => !todo.done).length === 0;
+              })
+              .includes(false) ||
+            stepsWithRequiredElements
+              .map((step) => {
+                return (
+                  step.requiredElements.filter(
+                    (requiredElement) => !requiredElement.done
+                  ).length === 0
+                );
+              })
+              .includes(false)
           }
+          title="Valider la consignation ?"
+          content="La consignation actuelle sera supprimée. Cette action est
+          irréversible."
+          buttonText="Valider"
         />
       )}
     </>
   );
 }
 
-function ConsignationCard({
-  stepId,
-  consignationSteps,
-  onToggleDisplay,
-  onCheckbox,
-}) {
-  const currentStep = consignationSteps.filter((step) => step.id === stepId)[0];
-  const todos = currentStep.todos;
-  const requiredElements = currentStep.requiredElements;
-  const nextSteps = currentStep.nextSteps;
-  const title = currentStep.title;
-  const type = currentStep.type;
-
-  return (
-    <div className="border">
-      <h1>{type.toUpperCase() + " - " + title}</h1>
-      {/* TODO <button> xmark </button> */}
-      {todos && (
-        <>
-          <h2>À faire :</h2>
-          {todos.map((todo) => {
-            return (
-              <div className="ml-2" key={todo.id}>
-                <input
-                  type="checkbox"
-                  id={todo.description}
-                  checked={todo.done}
-                  onChange={() => onCheckbox(currentStep.id, todo.id, "t")}
-                />
-                <label htmlFor={todo.description}>{todo.description}</label>
-              </div>
-            );
-          })}
-        </>
-      )}
-      {requiredElements && (
-        <>
-          <h2>Requis :</h2>
-          {requiredElements.map((requiredElem) => {
-            return (
-              <div className="ml-2" key={requiredElem.id}>
-                <input
-                  type="checkbox"
-                  id={requiredElem.description}
-                  checked={requiredElem.done}
-                  onChange={() =>
-                    onCheckbox(currentStep.id, requiredElem.id, "rE")
-                  }
-                />
-                <label htmlFor={requiredElem.description}>
-                  {requiredElem.description}
-                </label>
-              </div>
-            );
-          })}
-        </>
-      )}
-      {nextSteps && (
-        <>
-          <h2>Étapes suivantes :</h2>
-          {nextSteps.map((id) => {
-            const nextTitle = consignationSteps.map((consignationStep) => {
-              if (consignationStep.id === id) {
-                return consignationStep.title;
-              } else {
-                return null;
-              }
-            });
-            return (
-              <div className="ml-2" key={nextTitle}>
-                <input
-                  type="checkbox"
-                  id={nextTitle}
-                  disabled={
-                    requiredElements
-                      ? requiredElements.filter((rE) => !rE.done).length
-                      : false
-                  }
-                  checked={consignationSteps
-                    .map((consignationStep) => {
-                      if (consignationStep.id === id) {
-                        return consignationStep.shown;
-                      } else {
-                        return null;
-                      }
-                    })
-                    .includes(true)}
-                  onChange={() => onToggleDisplay(id)}
-                />
-                <label htmlFor={nextTitle}>{nextTitle}</label>
-              </div>
-            );
-          })}
-        </>
-      )}
-    </div>
-  );
-}
-
-function IncompleteTasksDisplay({
-  stepsWithTodos,
-  stepsWithRequiredElements,
-  onCheckbox,
-}) {
-  const jsxTodos = stepsWithTodos
-    .map((step) => {
-      return step.todos.map((todo) => {
-        if (!todo.done) {
-          return (
-            <div className="ml-2" key={todo.id}>
-              <input
-                type="checkbox"
-                id={todo.description}
-                checked={todo.done}
-                onChange={() => onCheckbox(step.id, todo.id, "t")}
-              />
-              <label htmlFor={todo.description}>{todo.description}</label>
-            </div>
-          );
-        } else {
-          return null;
-        }
-      });
-    })
-    .filter((step) => step !== null);
-
-  const jsxRequiredElements = stepsWithRequiredElements
-    .map((step) => {
-      return step.requiredElements.map((requiredElement) => {
-        if (!requiredElement.done) {
-          return (
-            <div className="ml-2" key={requiredElement.id}>
-              <input
-                type="checkbox"
-                id={requiredElement.description}
-                checked={requiredElement.done}
-                onChange={() => onCheckbox(step.id, requiredElement.id, "rE")}
-              />
-              <label htmlFor={requiredElement.description}>
-                {requiredElement.description}
-              </label>
-            </div>
-          );
-        } else {
-          return null;
-        }
-      });
-    })
-    .filter((step) => step !== null);
-
-  return (
-    <aside className="border">
-      <h2>À faire :</h2>
-      {jsxTodos}
-      <h2>Requis :</h2>
-      {jsxRequiredElements}
-    </aside>
-  );
-}
-
 ConsignationGuide.propTypes = {
   consignation: PropTypes.string.isRequired,
-};
-
-ConsignationCard.propTypes = {
-  consignationSteps: PropTypes.arrayOf(PropTypes.object.isRequired),
-  onToggleDisplay: PropTypes.func,
-  stepId: PropTypes.number,
-  onCheckbox: PropTypes.func,
-};
-
-IncompleteTasksDisplay.propTypes = {
-  steps: PropTypes.arrayOf(PropTypes.object.isRequired),
-  onCheckbox: PropTypes.func,
+  onResetConsignation: PropTypes.func.isRequired,
 };
