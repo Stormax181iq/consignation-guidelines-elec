@@ -1,12 +1,19 @@
 import { useState } from "react";
-import Button from "@mui/material/Button";
+import PropTypes from "prop-types";
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function AlertDialog({ validConsignation, isDisabled }) {
+export default function AlertDialog({
+  onAction,
+  isDisabled,
+  title,
+  content,
+  buttonText,
+}) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -32,28 +39,29 @@ export default function AlertDialog({ validConsignation, isDisabled }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Valider la consignation ?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            La consignation actuelle sera supprimée. Cette action est
-            irréversible.
+            {content}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <button onClick={handleClose} className="bg-slate-200 p-1 m-1">
             Annuler
           </button>
-          <button
-            onClick={validConsignation}
-            className="bg-slate-200 p-1 m-1"
-            autoFocus
-          >
-            Valider
+          <button onClick={onAction} className="bg-slate-200 p-1 m-1" autoFocus>
+            {buttonText}
           </button>
         </DialogActions>
       </Dialog>
     </>
   );
 }
+
+AlertDialog.propTypes = {
+  onAction: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
+};
