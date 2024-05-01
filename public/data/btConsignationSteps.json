@@ -139,7 +139,7 @@
       "todos": [
         {
           "id": 0,
-          "description": "Vérifier si AMEO est édité dans IEP : faire coche si manquante avec la date de vérification en commentaire",
+          "description": "Vérifier si AMEO édité dans IEP : faire coche si manquante avec la date de vérification en commentaire",
           "done": false
         },
         {
