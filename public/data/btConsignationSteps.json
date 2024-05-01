@@ -8,12 +8,12 @@
       "todos": [
         {
           "id": 0,
-          "description": "Rajouter l'ING sur l'intitulé si l'on a affaire à un chantier ingénierie",
+          "description": "Rajouter l'ING sur l'intitulé si chantier ingénierie",
           "done": false
         },
         {
           "id": 1,
-          "description": "Rajouter le MAINT s'il y a RSI, séparation ou autres accès sans besoin de remises d'ouvrages",
+          "description": "Rajouter MAINT si RSI, séparation ou autres accès sans besoin de remise d'ouvrage",
           "done": false
         }
       ],
@@ -25,7 +25,7 @@
         },
         {
           "id": 1,
-          "description": "Remplissage de la finalité des travaux ou de l'onglet travaux",
+          "description": "Remplissage de la finalité des travaux et de l'onglet travaux",
           "done": false
         },
         {
@@ -35,7 +35,7 @@
         },
         {
           "id": 3,
-          "description": "FCMO correct",
+          "description": "FCMO correct : motifs saumons arrière-plan D et F",
           "done": false
         }
       ],
@@ -44,37 +44,54 @@
     {
       "id": 1,
       "type": "bt",
+      "title": "Émergences",
+      "shown": false,
+      "nextSteps": [4, 5, 6, 7]
+    },
+    {
+      "id": 2,
+      "type": "bt",
+      "title": "Souterrain",
+      "shown": false,
+      "nextSteps": [4, 5, 6, 7]
+    },
+    {
+      "id": 3,
+      "type": "bt",
+      "title": "Aérien",
+      "shown": false,
+      "nextSteps": [4, 5, 6, 7]
+    },
+    {
+      "id": 4,
+      "type": "bt",
       "title": "Raccordement câbles",
       "shown": false,
       "todos": [
         {
           "id": 0,
-          "description": "Vérifier si l'AMEO est édité dans l'IEP",
-          "done": false
-        },
-        {
-          "id": 1,
-          "description": "Cocher LEIA AMEO amont et AMEO aval si exempté de PMEO",
+          "description": "Vérifier si AMEO édité dans IEP : faire coche si manquante avec la date de vérification en commentaire",
           "done": false
         }
       ],
-      "nextSteps": [4]
+      "nextSteps": [8]
     },
     {
-      "id": 2,
+      "id": 5,
       "type": "bt",
       "title": "Dé-raccordement câbles",
-      "shown": false
+      "shown": false,
+      "nextSteps": [9]
     },
     {
-      "id": 3,
+      "id": 6,
       "type": "bt",
-      "title": "Dépose abandon câbles",
+      "title": "Abandon câble souterrain",
       "shown": false,
       "todos": [
         {
           "id": 0,
-          "description": "Créer un nouveau courrier IEP des tronçons à démanteler ou abandonner",
+          "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès",
           "done": false
         },
         {
@@ -88,33 +105,41 @@
           "done": false
         }
       ],
-      "requiredElements": [
-        {
-          "id": 0,
-          "description": "Manœuvre des GE",
-          "done": false
-        },
-        {
-          "id": 1,
-          "description": "Désignation amont IBT",
-          "done": false
-        },
-        {
-          "id": 2,
-          "description": "Travaux aval IPT",
-          "done": false
-        }
-      ]
+      "nextSteps": [9]
     },
     {
-      "id": 4,
+      "id": 7,
       "type": "bt",
-      "title": "Message ecome si conditionnelle",
+      "title": "Dépose câble aérien",
       "shown": false,
       "todos": [
         {
           "id": 0,
-          "description": "Vérifier si l'AMEO est édité dans l'IEP",
+          "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Cocher LEIA AMHEO",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Rien si le câble reste en exploitation pour utilisation ultérieure",
+          "done": false
+        }
+      ],
+      "nextSteps": [9]
+    },
+    {
+      "id": 8,
+      "type": "bt",
+      "title": "Message ECOME si conditionnelle",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Vérifier si AMEO est édité dans IEP : faire coche si manquante avec la date de vérification en commentaire",
           "done": false
         },
         {
@@ -124,7 +149,128 @@
         },
         {
           "id": 2,
-          "description": "Vérifier MC avant désignation retour ecome",
+          "description": "Vérifier MC avant désignation retour ECOME",
+          "done": false
+        }
+      ],
+      "nextSteps": [9]
+    },
+    {
+      "id": 9,
+      "type": "bt",
+      "title": "Séparation / Condamnation : Vérification de la désignation du CDC / Manœuvres",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Manœuvres correctes",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Présence de la condamnation",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Les points indiqués correspondent au plan en PJ",
+          "done": false
+        },
+        {
+          "id": 3,
+          "description": "Manœuvres des GE",
+          "done": false
+        },
+        {
+          "id": 4,
+          "description": "Présence de la désignation amont IBT GE",
+          "done": false
+        }
+      ],
+      "nextSteps": [10, 11]
+    },
+    {
+      "id": 10,
+      "type": "bt",
+      "title": "Vérifications d'absence de tensions et vérification de la pose des MALT/CC",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "VAT réalisée",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Pose de MALT/CC",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Dépose de MALT/CC",
+          "done": false
+        }
+      ],
+      "nextSteps": [12, 13]
+    },
+    {
+      "id": 11,
+      "type": "bt",
+      "title": "Travaux uniquement en aérien (A1EC uniquement)",
+      "shown": false,
+      "nextSteps": [14]
+    },
+    {
+      "id": 12,
+      "type": "bt",
+      "title": "Identifications certaines des tronçons émergents ou souterrains",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Tous les tronçons sont identifiés = nombre de câbles réseau (section supérieure à 25 mm² ou en carto)",
+          "done": false
+        }
+      ],
+      "nextSteps": [14]
+    },
+    {
+      "id": 13,
+      "type": "bt",
+      "title": "Aérien : identification visuelle",
+      "shown": false,
+      "nextSteps": [14]
+    },
+    {
+      "id": 14,
+      "type": "bt",
+      "title": "Travaux (ADC ct / A1EC)",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Précision des travaux dans l'onglet travaux",
+          "done": false
+        }
+      ],
+      "nextSteps": [15]
+    },
+    {
+      "id": 15,
+      "type": "bt",
+      "title": "Décondamnation",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Présence des informations de dépose, abandon",
+          "done": false
+        }
+      ],
+      "todos": [
+        {
+          "id": 0,
+          "description": "Si mise sous tension faire coche LEIS aval MST",
           "done": false
         }
       ]
