@@ -6,41 +6,19 @@ export default function IncompleteTasksDisplay({
   onCheckbox,
 }) {
   const jsxTodos = stepsWithTodos
-    .map((step) => {
+    .flatMap((step) => {
       return step.todos.map((todo) => {
         if (!todo.done) {
           return (
-            <div className="ml-2" key={todo.id}>
+            <div className="ml-2" key={`${step.id}${todo.id}t`}>
               <input
                 type="checkbox"
-                id={todo.description}
+                id={`${step.id}${todo.id}t`}
                 checked={todo.done}
                 onChange={() => onCheckbox(step.id, todo.id, "t")}
               />
-              <label htmlFor={todo.description}>{todo.description}</label>
-            </div>
-          );
-        } else {
-          return null;
-        }
-      });
-    })
-    .filter((step) => step !== null);
-
-  const jsxRequiredElements = stepsWithRequiredElements
-    .map((step) => {
-      return step.requiredElements.map((requiredElement) => {
-        if (!requiredElement.done) {
-          return (
-            <div className="ml-2" key={requiredElement.id}>
-              <input
-                type="checkbox"
-                id={requiredElement.description}
-                checked={requiredElement.done}
-                onChange={() => onCheckbox(step.id, requiredElement.id, "rE")}
-              />
-              <label htmlFor={requiredElement.description}>
-                {requiredElement.description}
+              <label htmlFor={`${step.id}${todo.id}t`}>
+                {todo.description}
               </label>
             </div>
           );
@@ -51,12 +29,47 @@ export default function IncompleteTasksDisplay({
     })
     .filter((step) => step !== null);
 
+  // TODO : when two tasks have the same description, it shouldn't appear twice in the list and their ticked state should be synchronised
+
+  const jsxRequiredElements = stepsWithRequiredElements
+    .flatMap((step) => {
+      return step.requiredElements.map((requiredElement) => {
+        if (!requiredElement.done) {
+          return (
+            <div className="ml-2" key={`${step.id}${requiredElement.id}re`}>
+              <input
+                type="checkbox"
+                id={`${step.id}${requiredElement.id}re`}
+                checked={requiredElement.done}
+                onChange={() => onCheckbox(step.id, requiredElement.id, "rE")}
+              />
+              <label htmlFor={`${step.id}${requiredElement.id}re`}>
+                {requiredElement.description}
+              </label>
+            </div>
+          );
+        } else {
+          return null;
+        }
+      });
+    })
+    .filter((rE) => rE !== null);
+
   return (
     <aside className="border">
-      <h2>À faire :</h2>
-      {jsxTodos}
-      <h2>Requis :</h2>
-      {jsxRequiredElements}
+      <h1>Tâches incomplètes :</h1>
+      {jsxTodos.length > 0 && (
+        <>
+          <h2>À faire :</h2>
+          {jsxTodos}
+        </>
+      )}
+      {jsxRequiredElements.length > 0 && (
+        <>
+          <h2>Requis :</h2>
+          {jsxRequiredElements}
+        </>
+      )}
     </aside>
   );
 }

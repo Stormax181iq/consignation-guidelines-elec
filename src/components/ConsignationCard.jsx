@@ -30,14 +30,16 @@ export default function ConsignationCard({
           <h2>À faire :</h2>
           {todos.map((todo) => {
             return (
-              <div className="ml-2" key={todo.id}>
+              <div className="ml-2" key={`${stepId}${todo.id}t`}>
                 <input
                   type="checkbox"
-                  id={todo.description}
+                  id={`${stepId}${todo.id}t`}
                   checked={todo.done}
                   onChange={() => onCheckbox(currentStep.id, todo.id, "t")}
                 />
-                <label htmlFor={todo.description}>{todo.description}</label>
+                <label htmlFor={`${stepId}${todo.id}t`}>
+                  {todo.description}
+                </label>
               </div>
             );
           })}
@@ -48,16 +50,16 @@ export default function ConsignationCard({
           <h2>Requis :</h2>
           {requiredElements.map((requiredElem) => {
             return (
-              <div className="ml-2" key={requiredElem.id}>
+              <div className="ml-2" key={`${stepId}${requiredElem.id}re`}>
                 <input
                   type="checkbox"
-                  id={requiredElem.description}
+                  id={`${stepId}${requiredElem.id}re`}
                   checked={requiredElem.done}
                   onChange={() =>
                     onCheckbox(currentStep.id, requiredElem.id, "rE")
                   }
                 />
-                <label htmlFor={requiredElem.description}>
+                <label htmlFor={`${stepId}${requiredElem.id}re`}>
                   {requiredElem.description}
                 </label>
               </div>
