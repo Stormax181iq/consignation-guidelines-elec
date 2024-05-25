@@ -56,17 +56,17 @@ export default function IncompleteTasksDisplay({
     .filter((rE) => rE !== null);
 
   return (
-    <aside className="border">
-      <h1>Tâches incomplètes :</h1>
+    <aside className="bg-slate-50 border-2 border-black p-2 rounded-lg mb-2 overflow-y-scroll max-h-96">
+      <h1 className="text-xl font-bold">Tâches incomplètes :</h1>
       {jsxTodos.length > 0 && (
         <>
-          <h2>À faire :</h2>
+          <h2 className="text-xl font-medium">À faire :</h2>
           {jsxTodos}
         </>
       )}
       {jsxRequiredElements.length > 0 && (
         <>
-          <h2>Requis :</h2>
+          <h2 className="text-xl font-medium">Requis :</h2>
           {jsxRequiredElements}
         </>
       )}

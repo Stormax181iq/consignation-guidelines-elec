@@ -106,9 +106,10 @@ export default function ConsignationGuide({
   }
 
   return (
-    <>
-      {consignationSteps
-        ? consignationSteps.map((step) => {
+    <div className="w-screen mx-4 grid grid-cols-2">
+      <div>
+        {consignationSteps ? (
+          consignationSteps.map((step) => {
             if (step.shown) {
               return step.title ? (
                 <ConsignationCard
@@ -118,48 +119,50 @@ export default function ConsignationGuide({
                   onToggleDisplay={handleToggleDisplay}
                   onCheckbox={handleCheckbox}
                 />
-              ) : (
-                <p key="error-not-available">Pas encore disponible</p>
-              );
+              ) : null;
             } else {
               return null;
             }
           })
-        : null}
+        ) : (
+          <p key="error-not-available">Pas encore disponible</p>
+        )}
+      </div>
       {consignationSteps && (
-        <IncompleteTasksDisplay
-          stepsWithTodos={stepsWithTodos}
-          stepsWithRequiredElements={stepsWithRequiredElements}
-          onCheckbox={handleCheckbox}
-        />
+        <div className="flex flex-col justify-self-end w-1/3 fixed mr-12">
+          <IncompleteTasksDisplay
+            stepsWithTodos={stepsWithTodos}
+            stepsWithRequiredElements={stepsWithRequiredElements}
+            onCheckbox={handleCheckbox}
+          />
+
+          <AlertDialog
+            onAction={onResetConsignation}
+            isDisabled={
+              // If everything is ticked, the button is enabled, and reciprocally
+              stepsWithTodos
+                .map((step) => {
+                  return step.todos.filter((todo) => !todo.done).length === 0;
+                })
+                .includes(false) ||
+              stepsWithRequiredElements
+                .map((step) => {
+                  return (
+                    step.requiredElements.filter(
+                      (requiredElement) => !requiredElement.done
+                    ).length === 0
+                  );
+                })
+                .includes(false)
+            }
+            title="Valider la consignation ?"
+            content="La consignation actuelle sera supprimée. Cette action est
+            irréversible."
+            buttonText="Valider"
+          />
+        </div>
       )}
-      {consignationSteps && (
-        <AlertDialog
-          onAction={onResetConsignation}
-          isDisabled={
-            // If everything is ticked, the button is enabled, and reciprocally
-            stepsWithTodos
-              .map((step) => {
-                return step.todos.filter((todo) => !todo.done).length === 0;
-              })
-              .includes(false) ||
-            stepsWithRequiredElements
-              .map((step) => {
-                return (
-                  step.requiredElements.filter(
-                    (requiredElement) => !requiredElement.done
-                  ).length === 0
-                );
-              })
-              .includes(false)
-          }
-          title="Valider la consignation ?"
-          content="La consignation actuelle sera supprimée. Cette action est
-          irréversible."
-          buttonText="Valider"
-        />
-      )}
-    </>
+    </div>
   );
 }
 

@@ -27,7 +27,7 @@ export default function AlertDialog({
   return (
     <>
       <button
-        className="bg-emerald-500 p-2 disabled:bg-slate-300"
+        className="bg-[color:var(--enedis-green)] rounded-lg p-2 disabled:bg-slate-300 hover:ring-2 hover:ring-[color:var(--enedis-blue)] active:bg-[color:var(--enedis-blue)]"
         disabled={isDisabled}
         onClick={handleClickOpen}
       >
@@ -46,10 +46,17 @@ export default function AlertDialog({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <button onClick={handleClose} className="bg-slate-200 p-1 m-1">
+          <button
+            onClick={handleClose}
+            className="bg-slate-300 rounded-lg p-2 m-1 hover:ring-2 hover:ring-[color:var(--enedis-blue)] active:bg-[color:var(--enedis-blue)]"
+          >
             Annuler
           </button>
-          <button onClick={onAction} className="bg-slate-200 p-1 m-1" autoFocus>
+          <button
+            onClick={onAction}
+            className="bg-[color:var(--enedis-green)] rounded-lg p-2 m-1 hover:ring-2 hover:ring-[color:var(--enedis-blue)] active:bg-[color:var(--enedis-blue)]"
+            autoFocus
+          >
             {buttonText}
           </button>
         </DialogActions>

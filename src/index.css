@@ -15,3 +15,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+:root {
+  --enedis-green: #96cd32;
+  --enedis-blue: #1423dc;
+}

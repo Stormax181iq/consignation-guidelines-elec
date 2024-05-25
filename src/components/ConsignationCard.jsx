@@ -14,20 +14,27 @@ export default function ConsignationCard({
   const type = currentStep.type;
 
   return (
-    <div className="border">
-      <h1>{type.toUpperCase() + " - " + title}</h1>
-      {stepId !== 0 && (
-        <button onClick={() => onToggleDisplay(stepId)} className="w-6">
-          <img
-            src="./img/xmark-svgrepo.png"
-            alt="x-mark"
-            srcSet="./img/xmark-svgrepo.svg"
-          />
-        </button>
-      )}
+    <div className="bg-slate-50 border-black border-2 rounded-lg p-2 mb-4">
+      <div className="flex justify-between">
+        <h1 className="text-xl font-bold inline">
+          {type.toUpperCase() + " - " + title}
+        </h1>
+        {stepId !== 0 && (
+          <button
+            onClick={() => onToggleDisplay(stepId)}
+            className="inline-block w-10 p-2 hover:bg-slate-200 active:bg-[color:var(--enedis-blue)]"
+          >
+            <img
+              src="./img/xmark-svgrepo.png"
+              alt="x-mark"
+              srcSet="./img/xmark-svgrepo.svg"
+            />
+          </button>
+        )}
+      </div>
       {todos && (
         <>
-          <h2>À faire :</h2>
+          <h2 className="font-medium text-lg mt-2">À faire :</h2>
           {todos.map((todo) => {
             return (
               <div className="ml-2" key={`${stepId}${todo.id}t`}>
@@ -47,7 +54,7 @@ export default function ConsignationCard({
       )}
       {requiredElements && (
         <>
-          <h2>Requis :</h2>
+          <h2 className="font-medium text-lg mt-2">Requis :</h2>
           {requiredElements.map((requiredElem) => {
             return (
               <div className="ml-2" key={`${stepId}${requiredElem.id}re`}>
@@ -69,7 +76,7 @@ export default function ConsignationCard({
       )}
       {nextSteps && (
         <>
-          <h2>Étapes suivantes :</h2>
+          <h2 className="font-medium text-lg mt-2">Étapes suivantes :</h2>
           {nextSteps.map((id) => {
             const nextTitle = consignationSteps.map((consignationStep) => {
               if (consignationStep.id === id) {
