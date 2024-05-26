@@ -8,12 +8,7 @@
       "todos": [
         {
           "id": 0,
-          "description": "Rajouter l'ING sur l'intitulé si chantier ingénierie",
-          "done": false
-        },
-        {
-          "id": 1,
-          "description": "Rajouter MAINT si RSI, séparation ou autres accès sans besoin de remise d'ouvrage",
+          "description": "Rajouter l'ING sur l'intitulé si chantier ingénierie ou MAINT si RSI, séparation ou autres accès sans besoin de remise d'ouvrage",
           "done": false
         }
       ],
@@ -39,28 +34,32 @@
           "done": false
         }
       ],
-      "nextSteps": [1, 2, 3]
+      "nextSteps": [1, 2, 3],
+      "isNextStepUnique": false
     },
     {
       "id": 1,
       "type": "bt",
       "title": "Émergences",
       "shown": false,
-      "nextSteps": [4, 5, 6, 7]
+      "nextSteps": [4, 5, 6, 7],
+      "isNextStepUnique": false
     },
     {
       "id": 2,
       "type": "bt",
       "title": "Souterrain",
       "shown": false,
-      "nextSteps": [4, 5, 6, 7]
+      "nextSteps": [4, 5, 6, 7],
+      "isNextStepUnique": false
     },
     {
       "id": 3,
       "type": "bt",
       "title": "Aérien",
       "shown": false,
-      "nextSteps": [4, 5, 6, 7]
+      "nextSteps": [4, 5, 6, 7],
+      "isNextStepUnique": false
     },
     {
       "id": 4,
@@ -70,18 +69,26 @@
       "todos": [
         {
           "id": 0,
-          "description": "Vérifier si AMEO édité dans IEP : faire coche si manquante avec la date de vérification en commentaire",
+          "description": "Vérifier si AMEO édité dans IEP",
           "done": false
         }
       ],
-      "nextSteps": [8]
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Faire coche LEIA si manquante avec la date de vérification en commentaire"
+        }
+      ],
+      "nextSteps": [8],
+      "isNextStepUnique": false
     },
     {
       "id": 5,
       "type": "bt",
       "title": "Dé-raccordement câbles",
       "shown": false,
-      "nextSteps": [9]
+      "nextSteps": [9],
+      "isNextStepUnique": false
     },
     {
       "id": 6,
@@ -93,19 +100,16 @@
           "id": 0,
           "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès",
           "done": false
-        },
-        {
-          "id": 1,
-          "description": "Cocher LEIA AMHEO",
-          "done": false
-        },
-        {
-          "id": 2,
-          "description": "Rien si le câble reste en exploitation pour utilisation ultérieure",
-          "done": false
         }
       ],
-      "nextSteps": [9]
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)"
+        }
+      ],
+      "nextSteps": [9],
+      "isNextStepUnique": false
     },
     {
       "id": 7,
@@ -129,7 +133,14 @@
           "done": false
         }
       ],
-      "nextSteps": [9]
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)"
+        }
+      ],
+      "nextSteps": [9],
+      "isNextStepUnique": false
     },
     {
       "id": 8,
@@ -139,12 +150,7 @@
       "todos": [
         {
           "id": 0,
-          "description": "Vérifier si AMEO édité dans IEP : faire coche si manquante avec la date de vérification en commentaire",
-          "done": false
-        },
-        {
-          "id": 1,
-          "description": "Cocher contrôle schéma si PMEO conditionnelle",
+          "description": "Vérifier si AMEO édité dans IEP",
           "done": false
         },
         {
@@ -153,7 +159,14 @@
           "done": false
         }
       ],
-      "nextSteps": [9]
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche LEIA amont contrôle schéma si PMEO conditionnelle"
+        }
+      ],
+      "nextSteps": [9],
+      "isNextStepUnique": false
     },
     {
       "id": 9,
@@ -187,7 +200,8 @@
           "done": false
         }
       ],
-      "nextSteps": [10, 11]
+      "nextSteps": [10, 11],
+      "isNextStepUnique": true
     },
     {
       "id": 10,
@@ -204,21 +218,18 @@
           "id": 1,
           "description": "Pose de MALT/CC",
           "done": false
-        },
-        {
-          "id": 2,
-          "description": "Dépose de MALT/CC",
-          "done": false
         }
       ],
-      "nextSteps": [12, 13]
+      "nextSteps": [12, 13],
+      "isNextStepUnique": false
     },
     {
       "id": 11,
       "type": "bt",
       "title": "Travaux uniquement en aérien (A1EC uniquement)",
       "shown": false,
-      "nextSteps": [14]
+      "nextSteps": [14],
+      "isNextStepUnique": false
     },
     {
       "id": 12,
@@ -232,7 +243,8 @@
           "done": false
         }
       ],
-      "nextSteps": [14]
+      "nextSteps": [14],
+      "isNextStepUnique": false
     },
     {
       "id": 13,
@@ -244,7 +256,7 @@
     {
       "id": 14,
       "type": "bt",
-      "title": "Travaux (ADC ct / A1EC)",
+      "title": "Travaux",
       "shown": false,
       "requiredElements": [
         {
@@ -253,17 +265,23 @@
           "done": false
         }
       ],
-      "nextSteps": [15]
+      "nextSteps": [15],
+      "isNextStepUnique": false
     },
     {
       "id": 15,
       "type": "bt",
-      "title": "Décondamnation",
+      "title": "Déconsignation",
       "shown": false,
       "requiredElements": [
         {
           "id": 0,
           "description": "Présence des informations de dépose, abandon",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Dépose de MALT/CC",
           "done": false
         }
       ],
@@ -272,6 +290,12 @@
           "id": 0,
           "description": "Si mise sous tension faire coche LEIS aval MST",
           "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Faire coche LEIA aval MST"
         }
       ]
     }
