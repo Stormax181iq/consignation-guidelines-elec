@@ -13,6 +13,28 @@ export default function ConsignationCard({
   const title = currentStep.title;
   const type = currentStep.type;
 
+  function isNextStepDisabled() {
+    // TODO if nextStep should be unique, disable the nextSteps ticks when either nextStep is ticked
+
+    if (requiredElements && currentStep.isNextStepUnique) {
+      return nextSteps
+        .flatMap((id) => {
+          return consignationSteps.map((consignationStep) => {
+            if (consignationStep.id === id) {
+              return consignationStep.shown;
+            } else {
+              return null;
+            }
+          });
+        })
+        .includes(true);
+    } else if (requiredElements) {
+      return requiredElements.filter((rE) => !rE.done).length > 0;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <div className="bg-slate-50 border-black border-2 rounded-lg p-2 mb-4">
       <div className="flex justify-between">
@@ -76,7 +98,12 @@ export default function ConsignationCard({
       )}
       {nextSteps && (
         <>
-          <h2 className="font-medium text-lg mt-2">Étapes suivantes :</h2>
+          <h2 className="font-medium text-lg mt-2">
+            {currentStep.isNextStepUnique
+              ? "Étape suivante"
+              : "Étape(s) suivante(s)"}{" "}
+            :
+          </h2>
           {nextSteps.map((id) => {
             const nextTitle = consignationSteps.map((consignationStep) => {
               if (consignationStep.id === id) {
@@ -90,11 +117,7 @@ export default function ConsignationCard({
                 <input
                   type="checkbox"
                   id={nextTitle}
-                  disabled={
-                    requiredElements
-                      ? requiredElements.filter((rE) => !rE.done).length
-                      : false
-                  }
+                  disabled={isNextStepDisabled()}
                   checked={consignationSteps
                     .map((consignationStep) => {
                       if (consignationStep.id === id) {

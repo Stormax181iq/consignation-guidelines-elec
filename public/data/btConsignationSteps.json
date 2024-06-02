@@ -76,7 +76,8 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA si manquante avec la date de vérification en commentaire"
+          "description": "Faire coche LEIA si manquante avec la date de vérification en commentaire",
+          "done": false
         }
       ],
       "nextSteps": [8],
@@ -105,7 +106,8 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)"
+          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
+          "done": false
         }
       ],
       "nextSteps": [9],
@@ -136,7 +138,8 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)"
+          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
+          "done": false
         }
       ],
       "nextSteps": [9],
@@ -162,7 +165,8 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Coche LEIA amont contrôle schéma si PMEO conditionnelle"
+          "description": "Coche LEIA amont contrôle schéma si PMEO conditionnelle",
+          "done": false
         }
       ],
       "nextSteps": [9],
@@ -295,7 +299,8 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA aval MST"
+          "description": "Faire coche LEIA aval MST",
+          "done": false
         }
       ]
     }

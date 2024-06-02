@@ -31,7 +31,7 @@ export default function AlertDialog({
         disabled={isDisabled}
         onClick={handleClickOpen}
       >
-        Valider
+        {isDisabled ? "Je ne peux pas valider" : "Je peux valider mon accès"}
       </button>
       <Dialog
         open={open}
