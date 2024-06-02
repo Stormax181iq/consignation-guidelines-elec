@@ -76,7 +76,7 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA si manquante avec la date de vérification en commentaire",
+          "description": "Coche AMEO si manquante avec la date de vérification en commentaire",
           "done": false
         }
       ],
@@ -106,7 +106,7 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
+          "description": "Coche AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
           "done": false
         }
       ],
@@ -123,17 +123,12 @@
           "id": 0,
           "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès",
           "done": false
-        },
-        {
-          "id": 1,
-          "description": "Rien si le câble reste en exploitation pour utilisation ultérieure",
-          "done": false
         }
       ],
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
+          "description": "Coche AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
           "done": false
         }
       ],
@@ -160,7 +155,7 @@
       "ticks": [
         {
           "id": 0,
-          "description": "Coche LEIA amont contrôle schéma si PMEO conditionnelle",
+          "description": "Coche amont contrôle schéma si PMEO conditionnelle",
           "done": false
         }
       ],
@@ -190,12 +185,12 @@
         },
         {
           "id": 3,
-          "description": "Manœuvres des GE",
+          "description": "Manœuvres des GE si GE",
           "done": false
         },
         {
           "id": 4,
-          "description": "Présence de la désignation amont IBT GE",
+          "description": "Présence de la désignation amont IBT si GE",
           "done": false
         }
       ],
@@ -275,26 +270,24 @@
       "requiredElements": [
         {
           "id": 0,
-          "description": "Présence des informations de dépose, abandon",
+          "description": "Présence des informations de dépose, abandon, MST dans MC retour",
           "done": false
         },
         {
           "id": 1,
-          "description": "Dépose de MALT/CC",
-          "done": false
-        }
-      ],
-      "todos": [
-        {
-          "id": 0,
-          "description": "Si mise sous tension faire coche LEIS aval MST",
+          "description": "Dépose de MALT/CC (sauf A1EC)",
           "done": false
         }
       ],
       "ticks": [
         {
           "id": 0,
-          "description": "Faire coche LEIA aval MST",
+          "description": "Coche aval MST si mise sous tension",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Coche AMHEO si abandon ou dépose",
           "done": false
         }
       ]
