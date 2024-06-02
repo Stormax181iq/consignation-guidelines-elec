@@ -43,7 +43,7 @@ export default function App() {
           <p>Chargement ...</p>
         )}
       </header>
-      <main className="ml-2">
+      <main className="mx-2">
         {currentConsignation !== "" && (
           <ConsignationGuide
             consignation={currentConsignation}
