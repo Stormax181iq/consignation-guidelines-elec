@@ -15,17 +15,20 @@ export default function ConsignationCard({
 
   function isNextStepDisabled() {
     if (requiredElements && currentStep.isNextStepUnique) {
-      return nextSteps
-        .flatMap((id) => {
-          return consignationSteps.map((consignationStep) => {
-            if (consignationStep.id === id) {
-              return consignationStep.shown;
-            } else {
-              return null;
-            }
-          });
-        })
-        .includes(true);
+      return (
+        nextSteps
+          .flatMap((id) => {
+            return consignationSteps.map((consignationStep) => {
+              if (consignationStep.id === id) {
+                return consignationStep.shown;
+              } else {
+                return null;
+              }
+            });
+          })
+          .includes(true) ||
+        requiredElements.filter((rE) => !rE.done).length > 0
+      );
     } else if (requiredElements) {
       return requiredElements.filter((rE) => !rE.done).length > 0;
     } else {
@@ -57,12 +60,12 @@ export default function ConsignationCard({
           <h2 className="font-medium text-lg mt-2">À faire :</h2>
           {todos.map((todo) => {
             return (
-              <div className="ml-2" key={`${stepId}${todo.id}t`}>
+              <div className="ml-2" key={`${stepId}${todo.id}td`}>
                 <input
                   type="checkbox"
                   id={`${stepId}${todo.id}t`}
                   checked={todo.done}
-                  onChange={() => onCheckbox(currentStep.id, todo.id, "t")}
+                  onChange={() => onCheckbox(currentStep.id, todo.id, "td")}
                 />
                 <label htmlFor={`${stepId}${todo.id}t`}>
                   {todo.description}
@@ -98,9 +101,8 @@ export default function ConsignationCard({
         <>
           <h2 className="font-medium text-lg mt-2">
             {currentStep.isNextStepUnique
-              ? "Étape suivante"
-              : "Étape(s) suivante(s)"}{" "}
-            :
+              ? "Étape suivante :"
+              : "Étape(s) suivante(s) :"}
           </h2>
           {nextSteps.map((id) => {
             const nextTitle = consignationSteps.map((consignationStep) => {

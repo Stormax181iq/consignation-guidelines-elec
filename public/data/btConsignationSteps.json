@@ -126,11 +126,6 @@
         },
         {
           "id": 1,
-          "description": "Cocher LEIA AMHEO",
-          "done": false
-        },
-        {
-          "id": 2,
           "description": "Rien si le câble reste en exploitation pour utilisation ultérieure",
           "done": false
         }

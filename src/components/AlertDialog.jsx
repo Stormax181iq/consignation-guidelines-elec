@@ -12,7 +12,9 @@ export default function AlertDialog({
   isDisabled,
   title,
   content,
-  buttonText,
+  enabledButtonText,
+  disabledButtonText,
+  dialogButtonText,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -31,7 +33,7 @@ export default function AlertDialog({
         disabled={isDisabled}
         onClick={handleClickOpen}
       >
-        {isDisabled ? "Je ne peux pas valider" : "Je peux valider mon accès"}
+        {isDisabled ? disabledButtonText : enabledButtonText}
       </button>
       <Dialog
         open={open}
@@ -57,7 +59,7 @@ export default function AlertDialog({
             className="bg-[color:var(--enedis-green)] rounded-lg p-2 m-1 hover:ring-2 hover:ring-[color:var(--enedis-blue)] active:bg-[color:var(--enedis-blue)]"
             autoFocus
           >
-            {buttonText}
+            {dialogButtonText}
           </button>
         </DialogActions>
       </Dialog>
@@ -70,5 +72,7 @@ AlertDialog.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  buttonText: PropTypes.string.isRequired,
+  enabledButtonText: PropTypes.string.isRequired,
+  disabledButtonText: PropTypes.string.isRequired,
+  dialogButtonText: PropTypes.string.isRequired,
 };
