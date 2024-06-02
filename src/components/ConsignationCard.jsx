@@ -14,8 +14,6 @@ export default function ConsignationCard({
   const type = currentStep.type;
 
   function isNextStepDisabled() {
-    // TODO if nextStep should be unique, disable the nextSteps ticks when either nextStep is ticked
-
     if (requiredElements && currentStep.isNextStepUnique) {
       return nextSteps
         .flatMap((id) => {
