@@ -1,5 +1,5 @@
 {
-  "name": "consignation-guidelines-elec",
+  "name": "bifrost",
   "version": "0.1.0",
   "main": "public/electron.js",
   "author": "Kélian Chalier",
