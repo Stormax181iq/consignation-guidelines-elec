@@ -13,25 +13,26 @@ export default function ConsignationCard({
   const title = currentStep.title;
   const type = currentStep.type;
 
-  function isNextStepDisabled() {
-    function isAllRequiredElementsChecked() {
-      return !requiredElements.filter((rE) => !rE.done).length;
-    }
-    function isAnyNextStepTicked() {
-      return nextSteps.flatMap((id) => {
+  function isAllRequiredElementsChecked() {
+    return !requiredElements.filter((rE) => !rE.done).length;
+  }
+  function isAnyNextStepTicked() {
+    return nextSteps
+      .flatMap((id) => {
         return consignationSteps.map((consignationStep) => {
           if (consignationStep.id === id) {
             return consignationStep.shown;
           } else {
             return null;
           }
-        })
-      }).includes(true);
-    }
+        });
+      })
+      .includes(true);
+  }
+
+  function isNextStepDisabled() {
     if (requiredElements && currentStep.isNextStepUnique) {
-      return (
-        !isAllRequiredElementsChecked() || isAnyNextStepTicked()
-      );
+      return !isAllRequiredElementsChecked() || isAnyNextStepTicked();
     } else if (requiredElements) {
       return !isAllRequiredElementsChecked();
     } else if (currentStep.isNextStepUnique) {
