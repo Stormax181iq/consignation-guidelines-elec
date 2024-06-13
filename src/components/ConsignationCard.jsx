@@ -14,23 +14,28 @@ export default function ConsignationCard({
   const type = currentStep.type;
 
   function isNextStepDisabled() {
+    function isAllRequiredElementsChecked() {
+      return !requiredElements.filter((rE) => !rE.done).length;
+    }
+    function isAnyNextStepTicked() {
+      return nextSteps.flatMap((id) => {
+        return consignationSteps.map((consignationStep) => {
+          if (consignationStep.id === id) {
+            return consignationStep.shown;
+          } else {
+            return null;
+          }
+        })
+      }).includes(true);
+    }
     if (requiredElements && currentStep.isNextStepUnique) {
       return (
-        nextSteps
-          .flatMap((id) => {
-            return consignationSteps.map((consignationStep) => {
-              if (consignationStep.id === id) {
-                return consignationStep.shown;
-              } else {
-                return null;
-              }
-            });
-          })
-          .includes(true) ||
-        requiredElements.filter((rE) => !rE.done).length > 0
+        !isAllRequiredElementsChecked() || isAnyNextStepTicked()
       );
     } else if (requiredElements) {
-      return requiredElements.filter((rE) => !rE.done).length > 0;
+      return !isAllRequiredElementsChecked();
+    } else if (currentStep.isNextStepUnique) {
+      return isAnyNextStepTicked();
     } else {
       return false;
     }

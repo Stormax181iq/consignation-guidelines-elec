@@ -80,8 +80,8 @@
           "done": false
         }
       ],
-      "nextSteps": [8],
-      "isNextStepUnique": false
+      "nextSteps": [8, 9],
+      "isNextStepUnique": true
     },
     {
       "id": 5,
@@ -138,7 +138,7 @@
     {
       "id": 8,
       "type": "bt",
-      "title": "Message ECOME si conditionnelle",
+      "title": "PMEO Conditionnelle",
       "shown": false,
       "todos": [
         {
@@ -185,12 +185,12 @@
         },
         {
           "id": 3,
-          "description": "Manœuvres des GE si GE",
+          "description": "Manœuvres des GE (cocher si pas de GE)",
           "done": false
         },
         {
           "id": 4,
-          "description": "Présence de la désignation amont IBT si GE",
+          "description": "Présence de la désignation amont IBT (cocher si pas de GE)",
           "done": false
         }
       ],

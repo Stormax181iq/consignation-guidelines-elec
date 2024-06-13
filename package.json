@@ -1,7 +1,8 @@
 {
-  "name": "consignation-guidelines-elec",
+  "name": "bifrost",
   "version": "0.1.0",
-  "main": "public/electron.js",
+  "main": "public/main.js",
+  "homepage": "./",
   "author": "Kélian Chalier",
   "license": "MIT",
   "private": true,
@@ -10,6 +11,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
+    "@electron/remote": "^2.1.2",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.12",
@@ -28,10 +30,22 @@
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
-    "electron-build": "electron-builder",
-    "build": "npm run react-build && npm run electron-build",
-    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "dist": "electron-builder"
+    "build": "npm run react-build && electron-builder -c.extraMetadata.main=build/main.js",
+    "start": "concurrently -k \"cross-env BROWSER=none npm run react-start\" \"wait-on tcp:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "extends": null,
+    "appId": "com.example.bifrost",
+    "files": [
+      "dist/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "eslintConfig": {
     "extends": [
