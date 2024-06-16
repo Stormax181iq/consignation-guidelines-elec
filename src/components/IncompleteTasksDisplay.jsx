@@ -5,19 +5,31 @@ export default function IncompleteTasksDisplay({
   stepsWithRequiredElements,
   onCheckbox,
 }) {
+  // TODO : when two tasks have the same description, it shouldn't appear twice in the list and their tick state should be synced
+
+  const rawTodos = stepsWithTodos.flatMap((step) => {
+    return step.todos.map((todo) => {
+      return {
+        id: `${step.id}/${todo.id}.td`,
+        description: todo.description,
+      };
+    });
+  });
+  console.log(rawTodos);
+
   const jsxTodos = stepsWithTodos
     .flatMap((step) => {
       return step.todos.map((todo) => {
         if (!todo.done) {
           return (
-            <div className="ml-2" key={`${step.id}${todo.id}t`}>
+            <div className="ml-2" key={`${step.id}/${todo.id}.td`}>
               <input
                 type="checkbox"
-                id={`${step.id}${todo.id}t`}
+                id={`${step.id}/${todo.id}.td`}
                 checked={todo.done}
-                onChange={() => onCheckbox(step.id, todo.id, "t")}
+                onChange={() => onCheckbox(step.id, todo.id, "td")}
               />
-              <label htmlFor={`${step.id}${todo.id}t`}>
+              <label htmlFor={`${step.id}/${todo.id}.td`}>
                 {todo.description}
               </label>
             </div>
@@ -29,21 +41,19 @@ export default function IncompleteTasksDisplay({
     })
     .filter((step) => step !== null);
 
-  // TODO : when two tasks have the same description, it shouldn't appear twice in the list and their ticked state should be synchronised
-
   const jsxRequiredElements = stepsWithRequiredElements
     .flatMap((step) => {
       return step.requiredElements.map((requiredElement) => {
         if (!requiredElement.done) {
           return (
-            <div className="ml-2" key={`${step.id}${requiredElement.id}re`}>
+            <div className="ml-2" key={`${step.id}/${requiredElement.id}.re`}>
               <input
                 type="checkbox"
-                id={`${step.id}${requiredElement.id}re`}
+                id={`${step.id}/${requiredElement.id}.re`}
                 checked={requiredElement.done}
                 onChange={() => onCheckbox(step.id, requiredElement.id, "rE")}
               />
-              <label htmlFor={`${step.id}${requiredElement.id}re`}>
+              <label htmlFor={`${step.id}/${requiredElement.id}.re`}>
                 {requiredElement.description}
               </label>
             </div>

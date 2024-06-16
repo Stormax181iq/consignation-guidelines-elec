@@ -17,12 +17,24 @@ export default function ConsignationGuide({
   const shownSteps = consignationSteps
     ? consignationSteps.filter((step) => step.shown === true)
     : null;
-  const stepsWithTodos = shownSteps
+  const shownStepsWithTodos = shownSteps
     ? shownSteps.filter((step) => step.todos)
     : null;
-  const stepsWithRequiredElements = shownSteps
+  const shownStepsWithRequiredElements = shownSteps
     ? shownSteps.filter((step) => step.requiredElements)
     : null;
+  // TODO : try passing a raw list of todos to the IncompleteTasksDisplay in order to simplify.
+  // You should probably have to find the corresponding todo within consignationSteps to check it
+  // (maybe not because of the id of the checkbox). todo
+  // const rawShownTodos = shownStepsWithTodos.flatMap((step) => {
+  //   return step.todos.map((todo) => {
+  //     return {
+  //       id: `${step.id}/${todo.id}.td`,
+  //       description: todo.description,
+  //       done: todo.done,
+  //     };
+  //   });
+  // });
 
   useEffect(() => {
     // Consignation type change entails modification of current state data
@@ -178,8 +190,8 @@ export default function ConsignationGuide({
           {consignationSteps && (
             <div className="flex flex-col justify-self-end w-1/3 fixed mr-12">
               <IncompleteTasksDisplay
-                stepsWithTodos={stepsWithTodos}
-                stepsWithRequiredElements={stepsWithRequiredElements}
+                stepsWithTodos={shownStepsWithTodos}
+                stepsWithRequiredElements={shownStepsWithRequiredElements}
                 onCheckbox={handleCheckbox}
               />
 
@@ -187,14 +199,14 @@ export default function ConsignationGuide({
                 onAction={() => setIsTickPhase(true)}
                 isDisabled={
                   // If everything is ticked, the button is enabled, and reciprocally
-                  stepsWithTodos
+                  shownStepsWithTodos
                     .map((step) => {
                       return (
                         step.todos.filter((todo) => !todo.done).length === 0
                       );
                     })
                     .includes(false) ||
-                  stepsWithRequiredElements
+                  shownStepsWithRequiredElements
                     .map((step) => {
                       return (
                         step.requiredElements.filter(

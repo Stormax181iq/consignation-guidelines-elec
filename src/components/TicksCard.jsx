@@ -9,14 +9,14 @@ export default function TicksCard({ shownConsignationSteps, onCheckbox }) {
       {stepsWithTicks.map((step) => {
         return step.ticks.map((tick) => {
           return (
-            <div key={`${step.id}${tick.id}tk`} className="ml-2">
+            <div key={`${step.id}/${tick.id}.tk`} className="ml-2">
               <input
                 type="checkbox"
-                id={`${step.id}${tick.id}tk`}
+                id={`${step.id}/${tick.id}.tk`}
                 checked={tick.done}
                 onChange={() => onCheckbox(step.id, tick.id, "tk")}
               />
-              <label htmlFor={`${step.id}${tick.id}tk`}>
+              <label htmlFor={`${step.id}/${tick.id}.tk`}>
                 {tick.description}
               </label>
             </div>

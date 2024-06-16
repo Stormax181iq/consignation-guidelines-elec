@@ -66,14 +66,14 @@ export default function ConsignationCard({
           <h2 className="font-medium text-lg mt-2">À faire :</h2>
           {todos.map((todo) => {
             return (
-              <div className="ml-2" key={`${stepId}${todo.id}td`}>
+              <div className="ml-2" key={`${stepId}/${todo.id}.td`}>
                 <input
                   type="checkbox"
-                  id={`${stepId}${todo.id}t`}
+                  id={`${stepId}/${todo.id}.td`}
                   checked={todo.done}
                   onChange={() => onCheckbox(currentStep.id, todo.id, "td")}
                 />
-                <label htmlFor={`${stepId}${todo.id}t`}>
+                <label htmlFor={`${stepId}/${todo.id}.td`}>
                   {todo.description}
                 </label>
               </div>
@@ -86,16 +86,16 @@ export default function ConsignationCard({
           <h2 className="font-medium text-lg mt-2">Requis :</h2>
           {requiredElements.map((requiredElem) => {
             return (
-              <div className="ml-2" key={`${stepId}${requiredElem.id}re`}>
+              <div className="ml-2" key={`${stepId}/${requiredElem.id}.re`}>
                 <input
                   type="checkbox"
-                  id={`${stepId}${requiredElem.id}re`}
+                  id={`${stepId}/${requiredElem.id}.re`}
                   checked={requiredElem.done}
                   onChange={() =>
                     onCheckbox(currentStep.id, requiredElem.id, "rE")
                   }
                 />
-                <label htmlFor={`${stepId}${requiredElem.id}re`}>
+                <label htmlFor={`${stepId}/${requiredElem.id}.re`}>
                   {requiredElem.description}
                 </label>
               </div>

@@ -88,7 +88,7 @@
       "type": "bt",
       "title": "Dé-raccordement câbles",
       "shown": false,
-      "nextSteps": [9],
+      "nextSteps": [10],
       "isNextStepUnique": false
     },
     {
@@ -110,7 +110,7 @@
           "done": false
         }
       ],
-      "nextSteps": [9],
+      "nextSteps": [10],
       "isNextStepUnique": false
     },
     {
@@ -132,7 +132,7 @@
           "done": false
         }
       ],
-      "nextSteps": [9],
+      "nextSteps": [10],
       "isNextStepUnique": false
     },
     {
@@ -159,11 +159,19 @@
           "done": false
         }
       ],
-      "nextSteps": [9],
+      "nextSteps": [10],
       "isNextStepUnique": false
     },
     {
       "id": 9,
+      "type": "bt",
+      "title": "PMEO Classique",
+      "shown": false,
+      "nextSteps": [10],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 10,
       "type": "bt",
       "title": "Séparation / Condamnation : Vérification de la désignation du CDC / Manœuvres",
       "shown": false,
@@ -194,11 +202,11 @@
           "done": false
         }
       ],
-      "nextSteps": [10, 11],
+      "nextSteps": [11, 12],
       "isNextStepUnique": true
     },
     {
-      "id": 10,
+      "id": 11,
       "type": "bt",
       "title": "Vérifications d'absence de tensions et vérification de la pose des MALT/CC",
       "shown": false,
@@ -214,19 +222,19 @@
           "done": false
         }
       ],
-      "nextSteps": [12, 13],
-      "isNextStepUnique": false
-    },
-    {
-      "id": 11,
-      "type": "bt",
-      "title": "Travaux uniquement en aérien (A1EC uniquement)",
-      "shown": false,
-      "nextSteps": [14],
+      "nextSteps": [13, 14],
       "isNextStepUnique": false
     },
     {
       "id": 12,
+      "type": "bt",
+      "title": "Travaux uniquement en aérien (A1EC uniquement)",
+      "shown": false,
+      "nextSteps": [15],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 13,
       "type": "bt",
       "title": "Identifications certaines des tronçons émergents ou souterrains",
       "shown": false,
@@ -237,18 +245,18 @@
           "done": false
         }
       ],
-      "nextSteps": [14],
+      "nextSteps": [15],
       "isNextStepUnique": false
     },
     {
-      "id": 13,
+      "id": 14,
       "type": "bt",
       "title": "Aérien : identification visuelle",
       "shown": false,
-      "nextSteps": [14]
+      "nextSteps": [15]
     },
     {
-      "id": 14,
+      "id": 15,
       "type": "bt",
       "title": "Travaux",
       "shown": false,
@@ -259,11 +267,11 @@
           "done": false
         }
       ],
-      "nextSteps": [15],
+      "nextSteps": [16],
       "isNextStepUnique": false
     },
     {
-      "id": 15,
+      "id": 16,
       "type": "bt",
       "title": "Déconsignation",
       "shown": false,
