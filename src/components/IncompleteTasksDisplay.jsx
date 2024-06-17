@@ -1,21 +1,12 @@
 import PropTypes from "prop-types";
 
 export default function IncompleteTasksDisplay({
+  rawTodos,
   stepsWithTodos,
   stepsWithRequiredElements,
   onCheckbox,
 }) {
   // TODO : when two tasks have the same description, it shouldn't appear twice in the list and their tick state should be synced
-
-  const rawTodos = stepsWithTodos.flatMap((step) => {
-    return step.todos.map((todo) => {
-      return {
-        id: `${step.id}/${todo.id}.td`,
-        description: todo.description,
-      };
-    });
-  });
-  console.log(rawTodos);
 
   const jsxTodos = stepsWithTodos
     .flatMap((step) => {

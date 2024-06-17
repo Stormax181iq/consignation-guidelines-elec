@@ -54,9 +54,9 @@ export default function ConsignationCard({
             className="inline-block w-10 p-2 hover:bg-slate-200 active:bg-[color:var(--enedis-blue)]"
           >
             <img
-              src="./img/xmark-svgrepo.png"
+              src="./assets/xmark-svgrepo.png"
               alt="x-mark"
-              srcSet="./img/xmark-svgrepo.svg"
+              srcSet="./assets/xmark-svgrepo.svg"
             />
           </button>
         )}
