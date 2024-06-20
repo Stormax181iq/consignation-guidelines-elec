@@ -17,36 +17,59 @@ export default function ConsignationGuide({
   const shownSteps = consignationSteps
     ? consignationSteps.filter((step) => step.shown === true)
     : null;
-  const shownStepsWithTodos = shownSteps
-    ? shownSteps.filter((step) => step.todos)
+
+  const rawShownTodos = shownSteps
+    ? shownSteps
+        .filter((step) => step.todos)
+        .flatMap((step) => {
+          return step.todos.map((todo) => {
+            return {
+              id: formatId(step.id, todo.id, "td"),
+              description: todo.description,
+              done: todo.done,
+            };
+          });
+        })
     : null;
-  const shownStepsWithRequiredElements = shownSteps
-    ? shownSteps.filter((step) => step.requiredElements)
+  const rawTodos = consignationSteps
+    ? consignationSteps
+        .filter((step) => step.todos)
+        .flatMap((step) => {
+          return step.todos.map((todo) => {
+            return {
+              id: formatId(step.id, todo.id, "td"),
+              description: todo.description,
+              done: todo.done,
+            };
+          });
+        })
     : null;
-  const rawShownTodos = shownStepsWithTodos
-    ? shownStepsWithTodos.flatMap((step) => {
-        return step.todos.map((todo) => {
-          return {
-            id: formatId(step.id, todo.id, "td"),
-            description: todo.description,
-            done: todo.done,
-          };
-        });
-      })
+
+  const rawShownRequiredElements = shownSteps
+    ? shownSteps
+        .filter((step) => step.requiredElements)
+        .flatMap((step) => {
+          return step.requiredElements.map((requiredElement) => {
+            return {
+              id: formatId(step.id, requiredElement.id, "re"),
+              description: requiredElement.description,
+              done: requiredElement.done,
+            };
+          });
+        })
     : null;
-  const stepsWithTodos = consignationSteps
-    ? consignationSteps.filter((step) => step.todos)
-    : null;
-  const rawTodos = stepsWithTodos
-    ? stepsWithTodos.flatMap((step) => {
-        return step.todos.map((todo) => {
-          return {
-            id: formatId(step.id, todo.id, "td"),
-            description: todo.description,
-            done: todo.done,
-          };
-        });
-      })
+  const rawRequiredElements = consignationSteps
+    ? consignationSteps
+        .filter((step) => step.requiredElements)
+        .flatMap((step) => {
+          return step.requiredElements.map((requiredElement) => {
+            return {
+              id: formatId(step.id, requiredElement.id, "re"),
+              description: requiredElement.description,
+              done: requiredElement.done,
+            };
+          });
+        })
     : null;
 
   useEffect(() => {
@@ -85,12 +108,14 @@ export default function ConsignationGuide({
     );
   }
 
-  // TODO modify handleCheckbox() to tick other todos with the same description (use the rawTodos)
+  // TODO : simplify the function
   function handleCheckbox(stepId, checkboxId, category) {
     switch (category) {
       case "td":
         rawTodos.forEach((rawTodo) => {
-          if (rawTodo.id === formatId(stepId, checkboxId, category)) {
+          if (
+            rawTodo.id === formatId(stepId, checkboxId, category.toLowerCase())
+          ) {
             setConsignationSteps(
               consignationSteps.map((consignationStep) => {
                 return {
@@ -114,29 +139,37 @@ export default function ConsignationGuide({
         });
         break;
       case "rE":
-        setConsignationSteps(
-          consignationSteps.map((consignationStep) => {
-            if (consignationStep.id === stepId) {
-              return {
-                ...consignationStep,
-                requiredElements: consignationStep.requiredElements.map(
-                  (requiredElement) => {
-                    if (requiredElement.id === checkboxId) {
-                      return {
-                        ...requiredElement,
-                        done: !requiredElement.done,
-                      };
-                    } else {
-                      return requiredElement;
-                    }
-                  }
-                ),
-              };
-            } else {
-              return consignationStep;
-            }
-          })
-        );
+        rawRequiredElements.forEach((rawRequiredElement) => {
+          if (
+            rawRequiredElement.id ===
+            formatId(stepId, checkboxId, category.toLowerCase())
+          ) {
+            setConsignationSteps(
+              consignationSteps.map((consignationStep) => {
+                return {
+                  ...consignationStep,
+                  requiredElements: consignationStep.requiredElements
+                    ? consignationStep.requiredElements.map(
+                        (requiredElement) => {
+                          if (
+                            requiredElement.description ===
+                            rawRequiredElement.description
+                          ) {
+                            return {
+                              ...requiredElement,
+                              done: !requiredElement.done,
+                            };
+                          } else {
+                            return requiredElement;
+                          }
+                        }
+                      )
+                    : null,
+                };
+              })
+            );
+          }
+        });
         break;
       case "tk":
         setConsignationSteps(
@@ -212,8 +245,7 @@ export default function ConsignationGuide({
             <div className="flex flex-col justify-self-end w-1/3 fixed mr-12">
               <IncompleteTasksDisplay
                 rawShownTodos={rawShownTodos}
-                stepsWithTodos={shownStepsWithTodos}
-                stepsWithRequiredElements={shownStepsWithRequiredElements}
+                rawShownRequiredElements={rawShownRequiredElements}
                 onCheckbox={handleCheckbox}
                 onFormatId={formatId}
               />
@@ -222,22 +254,16 @@ export default function ConsignationGuide({
                 onAction={() => setIsTickPhase(true)}
                 isDisabled={
                   // If everything is ticked, the button is enabled, and reciprocally
-                  shownStepsWithTodos
-                    .map((step) => {
-                      return (
-                        step.todos.filter((todo) => !todo.done).length === 0
-                      );
+                  rawShownTodos
+                    .map((todo) => {
+                      return todo.done;
                     })
-                    .includes(false) ||
-                  shownStepsWithRequiredElements
-                    .map((step) => {
-                      return (
-                        step.requiredElements.filter(
-                          (requiredElement) => !requiredElement.done
-                        ).length === 0
-                      );
+                    .includes(true) ||
+                  rawShownRequiredElements
+                    .map((requiredElement) => {
+                      return requiredElement.done;
                     })
-                    .includes(false)
+                    .includes(true)
                 }
                 title="Valider la consignation ?"
                 content="La consignation actuelle sera supprimée. Cette action est

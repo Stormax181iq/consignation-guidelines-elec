@@ -2,80 +2,66 @@ import PropTypes from "prop-types";
 
 export default function IncompleteTasksDisplay({
   rawShownTodos,
-  stepsWithTodos,
-  stepsWithRequiredElements,
+  rawShownRequiredElements,
   onCheckbox,
   onFormatId,
 }) {
-  // TODO : when two tasks have the same description, it shouldn't appear twice in the list and their tick state should be synced
-
-  const uniqueRawShownTodos = rawShownTodos
-    ? rawShownTodos.map((rawTodo) => {
-        if (
-          rawShownTodos
-            .map((rawTodo2) => {
-              return rawTodo2.description === rawTodo.description;
-            })
-            .includes(true)
-        ) {
-          return null;
-        } else {
-          return rawTodo;
-        }
-      })
+  const jsxTodos = rawShownTodos
+    ? makeUnique(rawShownTodos)
+        .flatMap((todo) => {
+          if (!todo.done) {
+            return (
+              <div className="ml-2" key={todo.id}>
+                <input
+                  type="checkbox"
+                  id={todo.id}
+                  checked={todo.done}
+                  onChange={() => onCheckbox(todo.id, todo.id, "td")}
+                />
+                <label htmlFor={todo.id}>{todo.description}</label>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })
+        .filter((todo) => todo !== null)
     : null;
-  console.table(uniqueRawShownTodos);
 
-  const jsxTodos = stepsWithTodos
-    .flatMap((step) => {
-      return step.todos.map((todo) => {
-        if (!todo.done) {
-          return (
-            <div className="ml-2" key={onFormatId(step.id, todo.id, "td")}>
-              <input
-                type="checkbox"
-                id={onFormatId(step.id, todo.id, "td")}
-                checked={todo.done}
-                onChange={() => onCheckbox(step.id, todo.id, "td")}
-              />
-              <label htmlFor={onFormatId(step.id, todo.id, "td")}>
-                {todo.description}
-              </label>
-            </div>
-          );
-        } else {
-          return null;
-        }
-      });
-    })
-    .filter((step) => step !== null);
+  const jsxRequiredElements = rawShownRequiredElements
+    ? makeUnique(rawShownRequiredElements)
+        .flatMap((requiredElement) => {
+          if (!requiredElement.done) {
+            return (
+              <div className="ml-2" key={requiredElement.id}>
+                <input
+                  type="checkbox"
+                  id={requiredElement.id}
+                  checked={requiredElement.done}
+                  onChange={() =>
+                    onCheckbox(requiredElement.id, requiredElement.id, "rE")
+                  }
+                />
+                <label htmlFor={requiredElement.id}>
+                  {requiredElement.description}
+                </label>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })
+        .filter((requiredElement) => requiredElement !== null)
+    : null;
 
-  const jsxRequiredElements = stepsWithRequiredElements
-    .flatMap((step) => {
-      return step.requiredElements.map((requiredElement) => {
-        if (!requiredElement.done) {
-          return (
-            <div
-              className="ml-2"
-              key={onFormatId(step.id, requiredElement.id, "re")}
-            >
-              <input
-                type="checkbox"
-                id={onFormatId(step.id, requiredElement.id, "re")}
-                checked={requiredElement.done}
-                onChange={() => onCheckbox(step.id, requiredElement.id, "rE")}
-              />
-              <label htmlFor={onFormatId(step.id, requiredElement.id, "re")}>
-                {requiredElement.description}
-              </label>
-            </div>
-          );
-        } else {
-          return null;
-        }
-      });
-    })
-    .filter((rE) => rE !== null);
+  function makeUnique(arrOfObjects) {
+    const seen = new Set();
+    return arrOfObjects.filter((item) => {
+      const alreadySeen = seen.has(item.description);
+      seen.add(item.description);
+      return !alreadySeen;
+    });
+  }
 
   return (
     <aside className="bg-slate-50 border-2 border-black p-2 rounded-lg mb-2 overflow-y-scroll max-h-96">
@@ -97,7 +83,8 @@ export default function IncompleteTasksDisplay({
 }
 
 IncompleteTasksDisplay.propTypes = {
-  stepsWithTodos: PropTypes.arrayOf(PropTypes.object.isRequired),
-  stepsWithRequiredElements: PropTypes.arrayOf(PropTypes.object.isRequired),
+  rawShownTodos: PropTypes.arrayOf(PropTypes.object.isRequired),
+  rawShownRequiredElements: PropTypes.arrayOf(PropTypes.object.isRequired),
   onCheckbox: PropTypes.func,
+  onFormatId: PropTypes.func,
 };
