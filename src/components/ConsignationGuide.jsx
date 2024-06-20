@@ -254,16 +254,12 @@ export default function ConsignationGuide({
                 onAction={() => setIsTickPhase(true)}
                 isDisabled={
                   // If everything is ticked, the button is enabled, and reciprocally
-                  rawShownTodos
-                    .map((todo) => {
-                      return todo.done;
-                    })
-                    .includes(true) ||
                   rawShownRequiredElements
                     .map((requiredElement) => {
                       return requiredElement.done;
                     })
-                    .includes(true)
+                    .includes(false) ||
+                  !consignationSteps[consignationSteps.length - 1].shown
                 }
                 title="Valider la consignation ?"
                 content="La consignation actuelle sera supprimée. Cette action est
