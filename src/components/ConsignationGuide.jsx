@@ -72,6 +72,33 @@ export default function ConsignationGuide({
         })
     : null;
 
+  const rawShownTicks = shownSteps
+    ? shownSteps
+        .filter((step) => step.ticks)
+        .flatMap((step) => {
+          return step.ticks.map((tick) => {
+            return {
+              id: formatId(step.id, tick.id, "tk"),
+              description: tick.description,
+              done: tick.done,
+            };
+          });
+        })
+    : null;
+  const rawTicks = consignationSteps
+    ? consignationSteps
+        .filter((step) => step.ticks)
+        .flatMap((step) => {
+          return step.ticks.map((tick) => {
+            return {
+              id: formatId(step.id, tick.id, "tk"),
+              description: tick.description,
+              done: tick.done,
+            };
+          });
+        })
+    : null;
+
   useEffect(() => {
     // Consignation type change entails modification of current state data
     let ignore = false;
@@ -93,6 +120,15 @@ export default function ConsignationGuide({
     return `${stepId}/${checkboxId}.${type}`;
   }
 
+  function makeUnique(arrOfObjects) {
+    const seen = new Set();
+    return arrOfObjects.filter((item) => {
+      const alreadySeen = seen.has(item.description);
+      seen.add(item.description);
+      return !alreadySeen;
+    });
+  }
+
   function handleToggleDisplay(id) {
     setConsignationSteps(
       consignationSteps.map((consignationStep) => {
@@ -108,95 +144,83 @@ export default function ConsignationGuide({
     );
   }
 
-  // TODO : simplify the function
   function handleCheckbox(stepId, checkboxId, category) {
     switch (category) {
       case "td":
-        rawTodos.forEach((rawTodo) => {
-          if (
-            rawTodo.id === formatId(stepId, checkboxId, category.toLowerCase())
-          ) {
-            setConsignationSteps(
-              consignationSteps.map((consignationStep) => {
-                return {
-                  ...consignationStep,
-                  todos: consignationStep.todos
-                    ? consignationStep.todos.map((todo) => {
-                        if (todo.description === rawTodo.description) {
-                          return {
-                            ...todo,
-                            done: !todo.done,
-                          };
-                        } else {
-                          return todo;
-                        }
-                      })
-                    : null,
-                };
-              })
-            );
-          }
-        });
+        handleTodoCheckbox(stepId, checkboxId);
         break;
       case "rE":
-        rawRequiredElements.forEach((rawRequiredElement) => {
-          if (
-            rawRequiredElement.id ===
-            formatId(stepId, checkboxId, category.toLowerCase())
-          ) {
-            setConsignationSteps(
-              consignationSteps.map((consignationStep) => {
-                return {
-                  ...consignationStep,
-                  requiredElements: consignationStep.requiredElements
-                    ? consignationStep.requiredElements.map(
-                        (requiredElement) => {
-                          if (
-                            requiredElement.description ===
-                            rawRequiredElement.description
-                          ) {
-                            return {
-                              ...requiredElement,
-                              done: !requiredElement.done,
-                            };
-                          } else {
-                            return requiredElement;
-                          }
-                        }
-                      )
-                    : null,
-                };
-              })
-            );
-          }
-        });
+        handleRequiredElementCheckbox(stepId, checkboxId);
         break;
       case "tk":
-        setConsignationSteps(
-          consignationSteps.map((consignationStep) => {
-            if (consignationStep.id === stepId) {
-              return {
-                ...consignationStep,
-                ticks: consignationStep.ticks.map((tick) => {
-                  if (tick.id === checkboxId) {
-                    return {
-                      ...tick,
-                      done: !tick.done,
-                    };
-                  } else {
-                    return tick;
-                  }
-                }),
-              };
-            } else {
-              return consignationStep;
-            }
-          })
-        );
+        handleTickCheckbox(stepId, checkboxId);
         break;
       default:
         break;
     }
+  }
+
+  function handleTodoCheckbox(stepId, checkboxId) {
+    rawTodos.forEach((rawTodo) => {
+      if (rawTodo.id === formatId(stepId, checkboxId, "td")) {
+        setConsignationSteps(
+          consignationSteps.map((consignationStep) => {
+            return {
+              ...consignationStep,
+              todos: toggleDone(consignationStep.todos, rawTodo.description),
+            };
+          })
+        );
+      }
+    });
+  }
+
+  function handleRequiredElementCheckbox(stepId, checkboxId) {
+    rawRequiredElements.forEach((rawRequiredElement) => {
+      if (rawRequiredElement.id === formatId(stepId, checkboxId, "re")) {
+        setConsignationSteps(
+          consignationSteps.map((consignationStep) => {
+            return {
+              ...consignationStep,
+              requiredElements: toggleDone(
+                consignationStep.requiredElements,
+                rawRequiredElement.description
+              ),
+            };
+          })
+        );
+      }
+    });
+  }
+
+  function handleTickCheckbox(stepId, checkboxId) {
+    rawTicks.forEach((rawTick) => {
+      if (rawTick.id === formatId(stepId, checkboxId, "tk")) {
+        setConsignationSteps(
+          consignationSteps.map((consignationStep) => {
+            return {
+              ...consignationStep,
+              ticks: toggleDone(consignationStep.ticks, rawTick.description),
+            };
+          })
+        );
+      }
+    });
+  }
+
+  function toggleDone(items, description) {
+    return items
+      ? items.map((item) => {
+          if (item.description === description) {
+            return {
+              ...item,
+              done: !item.done,
+            };
+          } else {
+            return item;
+          }
+        })
+      : null;
   }
 
   return (
@@ -204,8 +228,10 @@ export default function ConsignationGuide({
       {isTickPhase ? (
         <div className="flex flex-col items-center">
           <TicksCard
-            shownConsignationSteps={shownSteps}
+            rawShownTicks={rawShownTicks}
             onCheckbox={handleCheckbox}
+            onFormatId={formatId}
+            onMakeUnique={makeUnique}
           />
           <AlertDialog
             onAction={onResetConsignation}
@@ -248,6 +274,7 @@ export default function ConsignationGuide({
                 rawShownRequiredElements={rawShownRequiredElements}
                 onCheckbox={handleCheckbox}
                 onFormatId={formatId}
+                onMakeUnique={makeUnique}
               />
 
               <AlertDialog

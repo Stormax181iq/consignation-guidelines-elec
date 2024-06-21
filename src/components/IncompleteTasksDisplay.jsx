@@ -4,10 +4,10 @@ export default function IncompleteTasksDisplay({
   rawShownTodos,
   rawShownRequiredElements,
   onCheckbox,
-  onFormatId,
+  onMakeUnique,
 }) {
   const jsxTodos = rawShownTodos
-    ? makeUnique(rawShownTodos)
+    ? onMakeUnique(rawShownTodos)
         .flatMap((todo) => {
           if (!todo.done) {
             return (
@@ -29,7 +29,7 @@ export default function IncompleteTasksDisplay({
     : null;
 
   const jsxRequiredElements = rawShownRequiredElements
-    ? makeUnique(rawShownRequiredElements)
+    ? onMakeUnique(rawShownRequiredElements)
         .flatMap((requiredElement) => {
           if (!requiredElement.done) {
             return (
@@ -54,15 +54,6 @@ export default function IncompleteTasksDisplay({
         .filter((requiredElement) => requiredElement !== null)
     : null;
 
-  function makeUnique(arrOfObjects) {
-    const seen = new Set();
-    return arrOfObjects.filter((item) => {
-      const alreadySeen = seen.has(item.description);
-      seen.add(item.description);
-      return !alreadySeen;
-    });
-  }
-
   return (
     <aside className="bg-slate-50 border-2 border-black p-2 rounded-lg mb-2 overflow-y-scroll max-h-96">
       <h1 className="text-xl font-bold">Tâches incomplètes :</h1>
@@ -86,5 +77,5 @@ IncompleteTasksDisplay.propTypes = {
   rawShownTodos: PropTypes.arrayOf(PropTypes.object.isRequired),
   rawShownRequiredElements: PropTypes.arrayOf(PropTypes.object.isRequired),
   onCheckbox: PropTypes.func,
-  onFormatId: PropTypes.func,
+  onMakeUnique: PropTypes.func,
 };
