@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 
-export default function SelectionPanel({ consignationTypes, onSubmit }) {
+export default function SelectionPanel({
+  consignationTypes,
+  isGuided,
+  onSubmit,
+  onTick,
+  isTickDisabled,
+}) {
   return (
     <form
       onSubmit={onSubmit}
@@ -25,6 +31,19 @@ export default function SelectionPanel({ consignationTypes, onSubmit }) {
           );
         })}
       </select>
+      <div>
+        <input
+          type="checkbox"
+          name="guidance"
+          id="guidance"
+          checked={isGuided}
+          onChange={onTick}
+          disabled={isTickDisabled()}
+        />
+        <label className="mx-1" htmlFor="guidance">
+          Consignation assistée
+        </label>
+      </div>
       <button
         type="submit"
         className="bg-[color:var(--enedis-green)] m-2 mb-8 p-2 rounded-lg hover:ring-2 hover:ring-[color:var(--enedis-blue)] active:bg-[color:var(--enedis-blue)]"
@@ -41,5 +60,8 @@ SelectionPanel.propTypes = {
       type: PropTypes.string.isRequired,
     })
   ).isRequired,
+  isGuided: PropTypes.bool.isRequired,
+  onTick: PropTypes.func.isRequired,
+  isTickDisabled: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
