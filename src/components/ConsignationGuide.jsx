@@ -144,7 +144,7 @@ export default function ConsignationGuide({
     );
   }
 
-  function handleCheckbox(stepId, checkboxId, category) {
+  function handleCheckbox(category, stepId, checkboxId = null) {
     switch (category) {
       case "td":
         handleTodoCheckbox(stepId, checkboxId);
@@ -153,16 +153,19 @@ export default function ConsignationGuide({
         handleRequiredElementCheckbox(stepId, checkboxId);
         break;
       case "tk":
-        handleTickCheckbox(stepId, checkboxId);
+        handleTickCheckbox(stepId);
         break;
       default:
         break;
     }
   }
 
-  function handleTodoCheckbox(stepId, checkboxId) {
+  function handleTodoCheckbox(stepId, checkboxId = null) {
     rawTodos.forEach((rawTodo) => {
-      if (rawTodo.id === formatId(stepId, checkboxId, "td")) {
+      if (
+        rawTodo.id ===
+        (checkboxId !== null ? formatId(stepId, checkboxId, "td") : stepId)
+      ) {
         setConsignationSteps(
           consignationSteps.map((consignationStep) => {
             return {
@@ -177,7 +180,10 @@ export default function ConsignationGuide({
 
   function handleRequiredElementCheckbox(stepId, checkboxId) {
     rawRequiredElements.forEach((rawRequiredElement) => {
-      if (rawRequiredElement.id === formatId(stepId, checkboxId, "re")) {
+      if (
+        rawRequiredElement.id ===
+        (checkboxId !== null ? formatId(stepId, checkboxId, "re") : stepId)
+      ) {
         setConsignationSteps(
           consignationSteps.map((consignationStep) => {
             return {
@@ -193,9 +199,9 @@ export default function ConsignationGuide({
     });
   }
 
-  function handleTickCheckbox(stepId, checkboxId) {
+  function handleTickCheckbox(stepId) {
     rawTicks.forEach((rawTick) => {
-      if (rawTick.id === formatId(stepId, checkboxId, "tk")) {
+      if (rawTick.id === stepId) {
         setConsignationSteps(
           consignationSteps.map((consignationStep) => {
             return {
@@ -228,6 +234,7 @@ export default function ConsignationGuide({
       {isTickPhase ? (
         <div className="flex flex-col items-center">
           <TicksCard
+            rawShownTodos={rawShownTodos}
             rawShownTicks={rawShownTicks}
             onCheckbox={handleCheckbox}
             onFormatId={formatId}
@@ -235,7 +242,18 @@ export default function ConsignationGuide({
           />
           <AlertDialog
             onAction={onResetConsignation}
-            isDisabled={false}
+            isDisabled={
+              rawShownTicks
+                .map((rawShownTick) => {
+                  return rawShownTick.done;
+                })
+                .includes(false) ||
+              rawShownTodos
+                .map((rawShownTodo) => {
+                  return rawShownTodo.done;
+                })
+                .includes(false)
+            }
             title="Terminer la consignation ?"
             content="Cette action est irréversible."
             enabledButtonText="Terminer la consignation"

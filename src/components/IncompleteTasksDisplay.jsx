@@ -16,7 +16,7 @@ export default function IncompleteTasksDisplay({
                   type="checkbox"
                   id={todo.id}
                   checked={todo.done}
-                  onChange={() => onCheckbox(todo.id, todo.id, "td")}
+                  onChange={() => onCheckbox("td", todo.id)}
                 />
                 <label htmlFor={todo.id}>{todo.description}</label>
               </div>
@@ -38,9 +38,7 @@ export default function IncompleteTasksDisplay({
                   type="checkbox"
                   id={requiredElement.id}
                   checked={requiredElement.done}
-                  onChange={() =>
-                    onCheckbox(requiredElement.id, requiredElement.id, "rE")
-                  }
+                  onChange={() => onCheckbox("rE", requiredElement.id)}
                 />
                 <label htmlFor={requiredElement.id}>
                   {requiredElement.description}
@@ -53,9 +51,8 @@ export default function IncompleteTasksDisplay({
         })
         .filter((requiredElement) => requiredElement !== null)
     : null;
-
   return (
-    <aside className="bg-slate-50 border-2 border-black p-2 rounded-lg mb-2 overflow-y-scroll max-h-96">
+    <aside className="bg-slate-50 border-2 border-black p-2 rounded-lg mb-2 overflow-y-scroll md:max-h-screen max-h-80">
       <h1 className="text-xl font-bold">Tâches incomplètes :</h1>
       {jsxTodos.length > 0 && (
         <>

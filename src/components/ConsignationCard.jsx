@@ -72,7 +72,7 @@ export default function ConsignationCard({
                   type="checkbox"
                   id={onFormatId(stepId, todo.id, "td")}
                   checked={todo.done}
-                  onChange={() => onCheckbox(currentStep.id, todo.id, "td")}
+                  onChange={() => onCheckbox("td", currentStep.id, todo.id)}
                 />
                 <label htmlFor={onFormatId(stepId, todo.id, "td")}>
                   {todo.description}
@@ -96,7 +96,7 @@ export default function ConsignationCard({
                   id={onFormatId(stepId, requiredElem.id, "re")}
                   checked={requiredElem.done}
                   onChange={() =>
-                    onCheckbox(currentStep.id, requiredElem.id, "rE")
+                    onCheckbox("rE", currentStep.id, requiredElem.id)
                   }
                 />
                 <label htmlFor={onFormatId(stepId, requiredElem.id, "re")}>

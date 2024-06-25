@@ -41,7 +41,7 @@ export default function SelectionPanel({
           disabled={isTickDisabled()}
         />
         <label className="mx-1" htmlFor="guidance">
-          Consignation assistée
+          Consignation guidée
         </label>
       </div>
       <button
