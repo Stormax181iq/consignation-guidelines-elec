@@ -45,7 +45,7 @@
       "package.json"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "./build/assets"
     }
   },
   "eslintConfig": {
