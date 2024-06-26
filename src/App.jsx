@@ -5,27 +5,32 @@ import ConsignationGuide from "./components/ConsignationGuide";
 
 export default function App() {
   const [consignationTypes, setConsignationTypes] = useState(null);
-  const [currentConsignation, setCurrentConsignation] = useState("");
+  const [currentConsignation, setCurrentConsignation] = useState(null);
   const [isGuided, setIsGuided] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
-    setCurrentConsignation(e.target.children[0].value);
+    setCurrentConsignation(
+      e.target.children[0].children[0].value === ""
+        ? null
+        : e.target.children[0].children[0].value
+    );
   }
 
   function handleTick() {
     setIsGuided(!isGuided);
   }
   function isTickDisabled() {
-    return currentConsignation !== "";
+    return currentConsignation !== null;
   }
 
-  function handleResetConsignation() {
-    setCurrentConsignation("");
+  function handleResetConsignation(e) {
+    e.preventDefault();
+    setCurrentConsignation(null);
   }
 
   function displayConsignationGuide() {
-    if (currentConsignation !== "") {
+    if (currentConsignation) {
       return isGuided ? (
         <ConsignationGuide
           consignation={currentConsignation}
@@ -72,6 +77,7 @@ export default function App() {
             isGuided={isGuided}
             onSubmit={handleSubmit}
             onTick={handleTick}
+            onResetConsignation={handleResetConsignation}
             isTickDisabled={isTickDisabled}
           />
         ) : (
