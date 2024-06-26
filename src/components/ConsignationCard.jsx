@@ -1,11 +1,15 @@
 import PropTypes from "prop-types";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 export default function ConsignationCard({
   stepId,
   consignationSteps,
   onToggleDisplay,
   onCheckbox,
   onFormatId,
+  onHideStep,
 }) {
   const currentStep = consignationSteps.filter((step) => step.id === stepId)[0];
   const todos = currentStep.todos;
@@ -52,13 +56,9 @@ export default function ConsignationCard({
         {stepId !== 0 && (
           <button
             onClick={() => onToggleDisplay(stepId)}
-            className="inline-block w-10 p-2 hover:bg-slate-200 active:bg-[color:var(--enedis-blue)]"
+            className="rounded-lg inline-block w-10 py-1 px-2 hover:bg-slate-200 active:bg-[color:var(--enedis-blue)]"
           >
-            <img
-              src="./assets/xmark-svgrepo.png"
-              alt="x-mark"
-              srcSet="./assets/xmark-svgrepo.svg"
-            />
+            <FontAwesomeIcon icon={faXmark} size="2xl" />
           </button>
         )}
       </div>
@@ -140,6 +140,12 @@ export default function ConsignationCard({
                   onChange={() => onToggleDisplay(id)}
                 />
                 <label htmlFor={nextTitle}>{nextTitle}</label>
+                <button
+                  className="rounded-lg mx-1 px-2 py-1 hover:bg-slate-100 active:bg-[color:var(--enedis-blue)]"
+                  onClick={() => onHideStep(id)}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
               </div>
             );
           })}

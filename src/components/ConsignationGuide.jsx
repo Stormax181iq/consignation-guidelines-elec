@@ -144,6 +144,21 @@ export default function ConsignationGuide({
     );
   }
 
+  function handleHideStep(id) {
+    setConsignationSteps(
+      consignationSteps.map((consignationStep) => {
+        if (consignationStep.id === id) {
+          return {
+            ...consignationStep,
+            shown: false,
+          };
+        } else {
+          return consignationStep;
+        }
+      })
+    );
+  }
+
   function handleCheckbox(category, stepId, checkboxId = null) {
     switch (category) {
       case "td":
@@ -275,6 +290,7 @@ export default function ConsignationGuide({
                       onToggleDisplay={handleToggleDisplay}
                       onCheckbox={handleCheckbox}
                       onFormatId={formatId}
+                      onHideStep={handleHideStep}
                     />
                   ) : null;
                 } else {
