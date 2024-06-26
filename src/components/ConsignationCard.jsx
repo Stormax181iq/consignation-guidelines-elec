@@ -157,8 +157,9 @@ export default function ConsignationCard({
 
 ConsignationCard.propTypes = {
   consignationSteps: PropTypes.arrayOf(PropTypes.object.isRequired),
-  onToggleDisplay: PropTypes.func,
-  stepId: PropTypes.number,
-  onCheckbox: PropTypes.func,
-  onFormatId: PropTypes.func,
+  onToggleDisplay: PropTypes.func.isRequired,
+  stepId: PropTypes.number.isRequired,
+  onCheckbox: PropTypes.func.isRequired,
+  onFormatId: PropTypes.func.isRequired,
+  onHideStep: PropTypes.func.isRequired,
 };

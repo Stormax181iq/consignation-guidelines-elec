@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import SelectionPanel from "./components/SelectionPanel";
 import ConsignationGuide from "./components/ConsignationGuide";
 
+import ImageZoom from "react-image-zooom";
+
 export default function App() {
   const [consignationTypes, setConsignationTypes] = useState(null);
   const [currentConsignation, setCurrentConsignation] = useState(null);
@@ -37,7 +39,7 @@ export default function App() {
           onResetConsignation={handleResetConsignation}
         />
       ) : (
-        <img src={getImagePath()} alt="Consignation Guide Diagram" />
+        <ImageZoom src={getImagePath()} alt="Consignation Guide Diagram" />
       );
     } else {
       return (
