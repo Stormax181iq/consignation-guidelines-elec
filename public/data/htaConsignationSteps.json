@@ -1,1 +1,346 @@
-
+{
+  "steps": [
+    {
+      "id": 0,
+      "type": "hta",
+      "title": "Lecture des plans",
+      "shown": true,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Rajouter l'ING sur l'intitulé si chantier ingénierie ou MAINT si RSI, séparation ou autres accès sans besoin de remise d'ouvrage",
+          "done": false
+        }
+      ],
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Numéro d'affaire",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Remplissage de la finalité des travaux et de l'onglet travaux",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Pièce jointe dans l'accès",
+          "done": false
+        },
+        {
+          "id": 3,
+          "description": "FCMO correct : motifs saumons arrière-plan D et F",
+          "done": false
+        }
+      ],
+      "nextSteps": [1, 2, 3],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 1,
+      "type": "hta",
+      "title": "Émergences",
+      "shown": false,
+      "nextSteps": [4, 5, 6, 7],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 2,
+      "type": "hta",
+      "title": "Souterrain",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Créer un nouveau courrier IEP des tronçons à abandonner"
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure"
+        }
+      ],
+      "nextSteps": [4, 5, 6, 7],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 3,
+      "type": "hta",
+      "title": "Aérien",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès"
+        }
+      ],
+      "nextSteps": [4, 5, 6, 7],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 4,
+      "type": "hta",
+      "title": "Raccordement câbles",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Vérifier si AMEO édité dans IEP",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche amont avec la date de vérification si absente",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Coche aval si sans PMEO",
+          "done": false
+        }
+      ],
+      "nextSteps": [8, 9],
+      "isNextStepUnique": true
+    },
+    {
+      "id": 5,
+      "type": "hta",
+      "title": "Dé-raccordement câbles",
+      "shown": false,
+      "nextSteps": [10],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 6,
+      "type": "hta",
+      "title": "Abandon câble souterrain",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Faire courrier AMHEO des tronçons abandonnés et/ou déposés"
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche aval AMHEO"
+        }
+      ],
+      "nextSteps": [10],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 7,
+      "type": "hta",
+      "title": "Dépose câble aérien",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Faire courrier AMHEO des tronçons abandonnés et/ou déposés"
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche aval AMHEO"
+        }
+      ],
+      "nextSteps": [10],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 8,
+      "type": "hta",
+      "title": "PMEO conditionnelle",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Vérifier si AMEO édité dans IEP",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Vérifier MC avant désignation retour ECOME",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche contrôle schéma",
+          "done": false
+        }
+      ],
+      "nextSteps": [10],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 9,
+      "type": "hta",
+      "title": "PMEO classique",
+      "shown": false,
+      "nextSteps": [10],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 10,
+      "type": "hta",
+      "title": "Séparation / Condamnation : Vérification de la désignation du CDC / Manuvres et RDCR",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Désignation correcte",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "RDCR correcte",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Manœuvres correctes",
+          "done": false
+        },
+        {
+          "id": 3,
+          "description": "Présence de la condamnation aliénation",
+          "done": false
+        },
+        {
+          "id": 4,
+          "description": "Les points indiqués correspondent au plan en pièce jointe",
+          "done": false
+        },
+        {
+          "id": 5,
+          "description": "Manœuvres des GE (cocher si pas de GE)",
+          "done": false
+        },
+        {
+          "id": 6,
+          "description": "Désignation amont IBT GE (cocher si pas de GE)",
+          "done": false
+        },
+        {
+          "id": 7,
+          "description": "Présence de la séparation des prod",
+          "done": false
+        }
+      ],
+      "nextSteps": [11, 12],
+      "isNextStepUnique": true
+    },
+    {
+      "id": 11,
+      "type": "hta",
+      "title": "Vérification d'absence de tension et de pose des MALT/CC",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Présence de VAT",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Pose des MALT/CC",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Dépose des MALT/CC",
+          "done": false
+        }
+      ],
+      "nextSteps": [13, 14],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 12,
+      "type": "hta",
+      "title": "Travaux uniquement en aérien (A1EC)",
+      "shown": false,
+      "nextSteps": [15],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 13,
+      "type": "hta",
+      "title": "Identification certaine des tronçons émergents ou souterrains",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Identification de tous les tronçons",
+          "done": false
+        }
+      ],
+      "nextSteps": [15],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 14,
+      "type": "hta",
+      "title": "Aérien : identification visuelle",
+      "shown": false,
+      "nextSteps": [15],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 15,
+      "type": "hta",
+      "title": "Travaux",
+      "shown": false,
+      "nextSteps": [16],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 16,
+      "type": "hta",
+      "title": "Déconsignation",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Informations de dépose et d'abandon",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche aval MST",
+          "done": false
+        }
+      ],
+      "nextSteps": [17],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 17,
+      "type": "hta",
+      "title": "Vérification des manœuvres retour RACR",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Manœuvres RACR correctes",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Mise en/hors conduite"
+        }
+      ]
+    }
+  ]
+}

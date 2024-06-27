@@ -1,0 +1,281 @@
+{
+  "steps": [
+    {
+      "id": 0,
+      "type": "atstbt",
+      "title": "Lecture des plans",
+      "shown": true,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Rajouter l'ING sur l'intitulé si chantier ingénierie ou MAINT si RSI, séparation ou autres accès sans besoin de remise d'ouvrage",
+          "done": false
+        }
+      ],
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Numéro d'affaire",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Remplissage de la finalité des travaux et de l'onglet travaux",
+          "done": false
+        },
+        {
+          "id": 2,
+          "description": "Pièce jointe dans l'accès",
+          "done": false
+        },
+        {
+          "id": 3,
+          "description": "FCMO correct : motifs saumons arrière-plan D et F",
+          "done": false
+        }
+      ],
+      "nextSteps": [1, 2, 3],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 1,
+      "type": "atstbt",
+      "title": "Émergences",
+      "shown": false,
+      "nextSteps": [4, 5, 6, 7, 8],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 2,
+      "type": "atstbt",
+      "title": "Souterrain",
+      "shown": false,
+      "nextSteps": [4, 5, 6, 7, 8],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 3,
+      "type": "atstbt",
+      "title": "Aérien",
+      "shown": false,
+      "nextSteps": [4, 5, 6, 7, 8],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 4,
+      "type": "atstbt",
+      "title": "Raccordement câbles",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Vérifier si AMEO édité dans IEP",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Vérifier si informations bien remplies dans DAO, rajouter dans le pavé 9 si besoin",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche AMEO si manquante avec la date de vérification en commentaire",
+          "done": false
+        }
+      ],
+      "nextSteps": [9, 10],
+      "isNextStepUnique": true
+    },
+    {
+      "id": 5,
+      "type": "atstbt",
+      "title": "Dé-raccordement câbles",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Vérifier si informations bien remplies dans DAO, rajouter dans le pavé 9 si besoin",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
+          "done": false
+        }
+      ],
+      "nextSteps": [12],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 6,
+      "type": "atstbt",
+      "title": "Abandon câble souterrain",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Vérifier si informations bien remplies dans DAO, rajouter dans le pavé 9 si besoin",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
+          "done": false
+        }
+      ],
+      "nextSteps": [12],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 7,
+      "type": "atstbt",
+      "title": "Dépose câble aérien",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Créer un nouveau courrier IEP des tronçons déposés dans l'accès",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Vérifier si informations bien remplies dans DAO, rajouter dans le pavé 9 si besoin",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche AMHEO (rien si le câble reste en exploitation pour utilisation ultérieure)",
+          "done": false
+        }
+      ],
+      "nextSteps": [12],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 8,
+      "type": "atstbt",
+      "title": "Déroulage, ATMR, ATSR. Pas de raccordement/dé-raccordement",
+      "shown": false,
+      "nextSteps": [12],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 9,
+      "type": "atstbt",
+      "title": "PMEO conditionnelle",
+      "shown": false,
+      "todos": [
+        {
+          "id": 0,
+          "description": "Vérifier si AMEO édité dans IEP",
+          "done": false
+        },
+        {
+          "id": 1,
+          "description": "Vérifier MC avant désignation retour ECOME",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche contrôle schéma",
+          "done": false
+        }
+      ],
+      "nextSteps": [11],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 10,
+      "type": "atstbt",
+      "title": "PMEO classique",
+      "shown": false,
+      "nextSteps": [11],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 11,
+      "type": "atstbt",
+      "title": "Vérification de la nécessité du beroshunt",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Si mise en phase dans l'onglet travaux : Beroshunt obligatoire lors de bouclage ou liaison parallèle BT & Beroshunt non-obligatoire sur un bouclage sans charge d'un même câble",
+          "done": false
+        }
+      ],
+      "nextSteps": [12],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 12,
+      "type": "atstbt",
+      "title": "Vérification des informations DAO",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Vérifier les informations DAO",
+          "done": false
+        }
+      ],
+      "nextSteps": [13],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 13,
+      "type": "atstbt",
+      "title": "Travaux",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Précision des travaux dans l'onglet travaux",
+          "done": false
+        }
+      ],
+      "nextSteps": [14],
+      "isNextStepUnique": false
+    },
+    {
+      "id": 14,
+      "type": "atstbt",
+      "title": "Vérification du message retour",
+      "shown": false,
+      "requiredElements": [
+        {
+          "id": 0,
+          "description": "Présence MC retour : ECOME/contrôle dépose ou abandon MST",
+          "done": false
+        }
+      ],
+      "ticks": [
+        {
+          "id": 0,
+          "description": "Coche aval MST si mise sous tension",
+          "done": false
+        }
+      ]
+    }
+  ]
+}

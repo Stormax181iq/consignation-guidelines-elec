@@ -6,11 +6,11 @@
     },
     {
       "id": 1,
-      "type": "hta"
+      "type": "atstbt"
     },
     {
       "id": 2,
-      "type": "atstbt"
+      "type": "hta"
     }
   ]
 }
